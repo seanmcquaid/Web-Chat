@@ -10,6 +10,8 @@ const usersRouter = require('./routes/users');
 
 const app = express();
 
+const { message } = require('./sockets');
+
 app.use(cors);
 
 app.use(logger('dev'));
@@ -34,8 +36,7 @@ const io = socketIo(server, {
 });
 
 io.on('connection', (socket) => {
-  console.log('CONNECTED');
-  socket.emit('fromBackend', 'hello');
+  message(socket);
 });
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
