@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -9,6 +10,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
+const mongoose = require('mongoose');
 
 const { message } = require('./sockets');
 
@@ -37,6 +39,12 @@ const io = socketIo(server, {
 
 io.on('connection', (socket) => {
   message(socket);
+});
+
+console.log(process.env);
+
+mongoose.connect(process.env.MONGO_DB_URL, { useNewUrlParser: true }, (err) => {
+  console.log(err);
 });
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
