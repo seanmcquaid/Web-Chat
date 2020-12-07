@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const messageSchema = new mongoose.Schema({
+const Message = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -15,6 +15,10 @@ const messageSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      sentFrom: {
+        type: String,
+        required: true,
+      },
       time: {
         type: Date,
         required: true,
@@ -23,4 +27,4 @@ const messageSchema = new mongoose.Schema({
   ],
 });
 
-module.exports = messageSchema;
+module.exports = Message;
