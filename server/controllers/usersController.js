@@ -32,11 +32,17 @@ exports.postRegister = async (req, res, next) => {
   }
 };
 
-exports.getProfile = async (req, res, next) => {};
+exports.getProfile = async (req, res, next) => {
+  const id = req.params.id;
+};
 
-exports.putProfile = async (req, res, next) => {};
+exports.putProfile = async (req, res, next) => {
+  const id = req.params.id;
+};
 
-exports.deleteFriend = async (req, res, next) => {};
+exports.deleteFriend = async (req, res, next) => {
+  const id = req.params.id;
+};
 
 exports.postFriend = async (req, res, next) => {};
 

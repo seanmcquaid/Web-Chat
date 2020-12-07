@@ -19,8 +19,14 @@ const User = new mongoose.Schema({
   },
   friends: [
     {
-      type: String,
-      required: true,
+      name: {
+        type: String,
+        required: true,
+      },
+      isOnline: {
+        type: Boolean,
+        default: false,
+      },
     },
   ],
   messages: [
