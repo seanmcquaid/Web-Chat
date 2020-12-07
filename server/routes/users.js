@@ -9,6 +9,8 @@ router
   .get('/profile/:id', checkAuth, usersController.getProfile)
   .put('/profile/:id', checkAuth, usersController.putProfile)
   .delete('/friends/:id', checkAuth, usersController.deleteFriend)
-  .post('/addFriend', checkAuth, usersController.postFriend);
+  .post('/addFriend', checkAuth, usersController.postFriend)
+  .get('/getMessages', checkAuth, usersController.getMessages)
+  .post('/sendMessage', checkAuth, usersController.postMessage);
 
 module.exports = router;

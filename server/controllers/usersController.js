@@ -11,3 +11,7 @@ exports.putProfile = async (req, res, next) => {};
 exports.deleteFriend = async (req, res, next) => {};
 
 exports.postFriend = async (req, res, next) => {};
+
+exports.getMessages = async (req, res, next) => {};
+
+exports.postMessage = async (req, res, next) => {};
