@@ -41,11 +41,13 @@ io.on('connection', (socket) => {
   message(socket);
 });
 
-console.log(process.env);
-
-mongoose.connect(process.env.MONGO_DB_URL, { useNewUrlParser: true }, (err) => {
-  console.log(err);
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true }, () => {
+  console.log('Connected to Mongo!');
 });
+
+const db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'MongoDB Connection Error'));
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
 

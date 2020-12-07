@@ -1,3 +1,3 @@
-exports.login = async (req, res, next) => {};
+exports.postLogin = async (req, res, next) => {};
 
-exports.register = async (req, res, next) => {};
+exports.postRegister = async (req, res, next) => {};
