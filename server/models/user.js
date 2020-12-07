@@ -11,11 +11,11 @@ const User = new mongoose.Schema({
   },
   isTyping: {
     type: Boolean,
-    required: true,
+    default: false,
   },
   isOnline: {
     type: Boolean,
-    required: true,
+    default: true,
   },
   friends: [
     {
@@ -45,4 +45,6 @@ const User = new mongoose.Schema({
   ],
 });
 
-module.exports = User;
+const UserModel = mongoose.model('user', User);
+
+module.exports = UserModel;

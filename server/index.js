@@ -13,7 +13,7 @@ const mongoose = require('mongoose');
 
 const { message } = require('./sockets');
 
-app.use(cors);
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -30,12 +30,13 @@ const server = http.createServer(app);
 const socketIo = require('socket.io');
 const io = socketIo(server, {
   cors: {
-    origin: process.env.CLIENT_URL,
+    origin: '*',
     methods: ['GET', 'POST'],
   },
 });
 
 io.on('connection', (socket) => {
+  console.log('Client connected');
   message(socket);
   io.on('error', (err) => {
     console.log(err);
