@@ -22,6 +22,8 @@ exports.postRegister = async (req, res, next) => {
       password: encryptedPassword,
     });
 
+    // encrypt JWT and send it, will revisit model for sending tomorrow
+
     return res.status(200).send({ ...userInfo });
   } catch (error) {
     return res.status(403).send({
