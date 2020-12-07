@@ -27,13 +27,28 @@ const port = process.env.PORT || '4000';
 
 const server = http.createServer(app);
 
-io.on('connection', (socket) => {
-  message(socket);
+const socketIo = require('socket.io');
+const io = socketIo(server, {
+  cors: {
+    origin: process.env.CLIENT_URL,
+    methods: ['GET', 'POST'],
+  },
 });
 
-mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true }, () => {
-  console.log('Connected to Mongo!');
+io.on('connection', (socket) => {
+  message(socket);
+  io.on('error', (err) => {
+    console.log(err);
+  });
 });
+
+mongoose.connect(
+  process.env.MONGO_URL,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  () => {
+    console.log('Connected to Mongo!');
+  }
+);
 
 const db = mongoose.connection;
 

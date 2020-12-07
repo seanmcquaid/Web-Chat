@@ -4,8 +4,8 @@ const usersController = require('../controllers/usersController');
 const checkAuth = require('../middleware/checkAuth');
 
 router
-  .post('/login', usersController.login)
-  .post('/register', usersController.register)
+  .post('/login', usersController.postLogin)
+  .post('/register', usersController.postRegister)
   .get('/profile/:id', checkAuth, usersController.getProfile)
   .put('/profile/:id', checkAuth, usersController.putProfile)
   .delete('/friends/:id', checkAuth, usersController.deleteFriend)
