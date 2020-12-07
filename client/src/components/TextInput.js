@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const TextInput = memo(({ type, name, onChange, value, label }) => (
   <Label>
@@ -16,5 +17,13 @@ const TextInput = memo(({ type, name, onChange, value, label }) => (
 const Label = styled.label``;
 
 const StyledTextInput = styled.input``;
+
+TextInput.propTypes = {
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  label: PropTypes.string,
+};
 
 export default TextInput;
