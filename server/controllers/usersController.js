@@ -59,8 +59,16 @@ exports.postRegister = async (req, res, next) => {
 
 exports.getProfile = async (req, res, next) => {
   try {
-    const id = req.params.id;
-  } catch (error) {}
+    const _id = req.params.id;
+    const userInfo = await UserModel.findOne({ _id });
+
+    return res.status(200).send({ ...userInfo });
+  } catch (error) {
+    return res.status(500).send({
+      errorMessage:
+        'There was an issue getting the profile info, please try again!',
+    });
+  }
 };
 
 exports.putProfile = async (req, res, next) => {
