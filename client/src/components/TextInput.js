@@ -2,17 +2,20 @@ import { memo } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const TextInput = memo(({ type, name, onChange, value, label }) => (
-  <Label>
-    {label}
-    <StyledTextInput
-      type={type}
-      name={name}
-      onChange={onChange}
-      value={value}
-    />
-  </Label>
-));
+const TextInput = memo(
+  ({ type, name, onChange, value, label, placeholder }) => (
+    <Label>
+      {label}
+      <StyledTextInput
+        type={type}
+        name={name}
+        onChange={onChange}
+        value={value}
+        placeholder={placeholder}
+      />
+    </Label>
+  )
+);
 
 const Label = styled.label``;
 
@@ -24,6 +27,7 @@ TextInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   label: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 export default TextInput;
