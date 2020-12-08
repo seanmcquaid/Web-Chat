@@ -1,4 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import thunkMiddleware from 'redux-thunk';
 import friendsReducer from './friends/reducer';
 import messagesReducer from './messages/reducer';
@@ -10,6 +12,13 @@ export const rootReducer = combineReducers({
   user: userReducer,
 });
 
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const configureStore = (preloadedState) => {
   const middlewares = [thunkMiddleware];
   const middlewareEnhancer = applyMiddleware(...middlewares);
@@ -17,9 +26,14 @@ const configureStore = (preloadedState) => {
   const enhancers = [middlewareEnhancer];
   const composedEnhancers = compose(...enhancers);
 
-  const store = createStore(rootReducer, preloadedState, composedEnhancers);
+  const store = createStore(
+    persistedReducer,
+    preloadedState,
+    composedEnhancers
+  );
+  const persistor = persistStore(store);
 
-  return store;
+  return { store, persistor };
 };
 
 export default configureStore;
