@@ -11,7 +11,7 @@ const Button = memo(({ onClick, type, children, disabled }) => (
 Button.propTypes = {
   onClick: PropTypes.func,
   type: PropTypes.string.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
 };
 
