@@ -1,7 +1,14 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import friendsReducer from './friends/reducer';
+import messagesReducer from './messages/reducer';
+import userReducer from './user/reducer';
 
-const rootReducer = combineReducers({});
+export const rootReducer = combineReducers({
+  friends: friendsReducer,
+  messages: messagesReducer,
+  user: userReducer,
+});
 
 const configureStore = (preloadedState) => {
   const middlewares = [thunkMiddleware];
