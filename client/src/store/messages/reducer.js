@@ -1,4 +1,7 @@
-const initialState = {};
+const initialState = {
+  messages: [],
+  isTyping: false,
+};
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {

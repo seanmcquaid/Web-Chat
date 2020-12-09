@@ -1,7 +1,9 @@
-const initialState = {};
+const initialState = {
+  token: null,
+  isOnline: false,
+};
 
 const reducer = (state = initialState, action) => {
-  console.log(action);
   switch (action.type) {
     default:
       return state;
