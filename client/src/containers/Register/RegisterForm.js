@@ -1,8 +1,11 @@
 import { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Button, TextInput } from '../../components';
+import { registerAction } from '../../store/user/actions';
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
   const [inputText, setInputText] = useState({
     username: '',
     password: '',
@@ -12,11 +15,17 @@ const RegisterForm = () => {
   const onChange = useCallback((event) => {
     setInputText((state) => ({
       ...state,
-      [event.name]: event.target.value,
+      [event.target.name]: event.target.value,
     }));
   }, []);
 
-  const onSubmit = useCallback(() => {}, []);
+  const onSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      dispatch(registerAction(inputText.username, inputText.password));
+    },
+    [dispatch, inputText]
+  );
 
   return (
     <Form onSubmit={onSubmit}>
