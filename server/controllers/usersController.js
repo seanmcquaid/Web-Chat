@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const UserModel = require('../models/user');
+require('dotenv').config();
 
 exports.postLogin = async (req, res, next) => {
   try {
@@ -21,7 +22,12 @@ exports.postLogin = async (req, res, next) => {
       });
     }
 
-    return res.status(200).send({ ...userInfo });
+    const token = jwt.sign(
+      { username: userInfo.username, id: userInfo._id },
+      process.env.JWT_SECRET
+    );
+
+    return res.status(200).send({ token, isOnline: userInfo.isOnline });
   } catch (error) {
     return res.status(500).send({
       errorMessage: 'There was an issue with logging in, please try again!',
@@ -47,9 +53,12 @@ exports.postRegister = async (req, res, next) => {
       password: encryptedPassword,
     });
 
-    // encrypt JWT and send it, will revisit model for sending tomorrow
+    const token = jwt.sign(
+      { username: userInfo.username, id: userInfo._id },
+      process.env.JWT_SECRET
+    );
 
-    return res.status(200).send({ ...userInfo });
+    return res.status(200).send({ token, isOnline: userInfo.isOnline });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
