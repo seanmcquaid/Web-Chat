@@ -40,7 +40,7 @@ exports.postRegister = async (req, res, next) => {
       });
     }
 
-    const encryptedPassword = bcrypt.hash(password, 10);
+    const encryptedPassword = await bcrypt.hash(password, 10);
 
     const userInfo = await UserModel.create({
       username,
@@ -51,6 +51,7 @@ exports.postRegister = async (req, res, next) => {
 
     return res.status(200).send({ ...userInfo });
   } catch (error) {
+    console.log(error);
     return res.status(500).send({
       errorMessage: 'There was an issue with registering, please try again!',
     });
