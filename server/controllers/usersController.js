@@ -68,8 +68,8 @@ exports.postRegister = async (req, res, next) => {
 
 exports.getProfile = async (req, res, next) => {
   try {
-    // get this id from token
-    const userInfo = await UserModel.findOne({ _id });
+    const { id } = req.token;
+    const userInfo = await UserModel.findOne({ _id: id });
 
     return res.status(200).send({ ...userInfo });
   } catch (error) {
@@ -92,7 +92,7 @@ exports.postFriend = async (req, res, next) => {
 
 exports.deleteFriend = async (req, res, next) => {
   try {
-    const id = req.params.id;
+    const id = req.params?.id;
   } catch (error) {}
 };
 
