@@ -1,11 +1,13 @@
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, TextInput } from '../../components';
 import { registerAction } from '../../store/user/actions';
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [inputText, setInputText] = useState({
     username: '',
     password: '',
@@ -22,9 +24,13 @@ const RegisterForm = () => {
   const onSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      dispatch(registerAction(inputText.username, inputText.password));
+      dispatch(registerAction(inputText.username, inputText.password)).then(
+        () => {
+          history.push('/userHome');
+        }
+      );
     },
-    [dispatch, inputText]
+    [dispatch, inputText, history]
   );
 
   return (
