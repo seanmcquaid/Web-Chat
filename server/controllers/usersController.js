@@ -66,7 +66,7 @@ exports.postRegister = async (req, res, next) => {
   }
 };
 
-exports.getProfile = async (req, res, next) => {
+exports.getUserInfo = async (req, res, next) => {
   try {
     const { id } = req.token;
     const userInfo = await UserModel.findOne({ _id: id });
@@ -75,7 +75,7 @@ exports.getProfile = async (req, res, next) => {
   } catch (error) {
     return res.status(500).send({
       errorMessage:
-        'There was an issue getting the profile info, please try again!',
+        'There was an issue getting the user info, please try again!',
     });
   }
 };
@@ -102,6 +102,11 @@ exports.getMessages = async (req, res, next) => {
 };
 
 exports.postMessage = async (req, res, next) => {
+  try {
+  } catch (error) {}
+};
+
+exports.getAllUsers = async (req, res, next) => {
   try {
   } catch (error) {}
 };
