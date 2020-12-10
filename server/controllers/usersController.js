@@ -60,7 +60,6 @@ exports.postRegister = async (req, res, next) => {
 
     return res.status(200).send({ token, isOnline: userInfo.isOnline });
   } catch (error) {
-    console.log(error);
     return res.status(500).send({
       errorMessage: 'There was an issue with registering, please try again!',
     });
@@ -69,7 +68,7 @@ exports.postRegister = async (req, res, next) => {
 
 exports.getProfile = async (req, res, next) => {
   try {
-    const _id = req.params.id;
+    // get this id from token
     const userInfo = await UserModel.findOne({ _id });
 
     return res.status(200).send({ ...userInfo });
@@ -83,18 +82,17 @@ exports.getProfile = async (req, res, next) => {
 
 exports.putProfile = async (req, res, next) => {
   try {
-    const id = req.params.id;
+  } catch (error) {}
+};
+
+exports.postFriend = async (req, res, next) => {
+  try {
   } catch (error) {}
 };
 
 exports.deleteFriend = async (req, res, next) => {
   try {
     const id = req.params.id;
-  } catch (error) {}
-};
-
-exports.postFriend = async (req, res, next) => {
-  try {
   } catch (error) {}
 };
 
