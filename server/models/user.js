@@ -63,6 +63,10 @@ User.methods.deleteFriend = function (name) {
   this.friends = this.friends.filter((friend) => friend.name !== name);
 };
 
+User.methods.addMessage = function (message) {
+  this.messages = [...this.messages, message];
+};
+
 const UserModel = mongoose.model('user', UserSchema);
 
 module.exports = UserModel;

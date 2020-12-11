@@ -119,7 +119,26 @@ exports.deleteFriend = async (req, res, next) => {
 
 exports.postMessage = async (req, res, next) => {
   try {
-  } catch (error) {}
+    const { id } = req?.token;
+    const { message, sentTo, sentFrom } = req?.body;
+    const time = new Date();
+
+    const sendingUserInfo = await UserModel.findOne({ _id: id });
+    const receivingUserInfo = await UserModel.findOne({ username: sentTo });
+
+    const messageInfo = { message, sentTo, sentFrom, time };
+
+    await sendingUserInfo.addMessage(messageInfo);
+    await receivingUserInfo.addMessage(messageInfo);
+
+    const updatedUserInfo = await UserModel.findOne({ _id: id });
+
+    return res.status(200).send({ ...updatedUserInfo });
+  } catch (error) {
+    return res.status(500).send({
+      errorMessage: 'There was an issue sending a message, please try again!',
+    });
+  }
 };
 
 exports.getAllUsers = async (req, res, next) => {
