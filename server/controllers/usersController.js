@@ -5,7 +5,7 @@ require('dotenv').config();
 
 exports.postLogin = async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { username, password } = req?.body;
     const userInfo = await UserModel.findOne({ username });
 
     if (!userInfo) {
@@ -37,7 +37,7 @@ exports.postLogin = async (req, res, next) => {
 
 exports.postRegister = async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { username, password } = req?.body;
 
     if (await UserModel.findOne({ username })) {
       return res.status(401).send({
@@ -68,7 +68,7 @@ exports.postRegister = async (req, res, next) => {
 
 exports.getUserInfo = async (req, res, next) => {
   try {
-    const { id } = req.token;
+    const { id } = req?.token;
     const userInfo = await UserModel.findOne({ _id: id });
 
     return res.status(200).send({ ...userInfo });
@@ -80,25 +80,41 @@ exports.getUserInfo = async (req, res, next) => {
   }
 };
 
-exports.putProfile = async (req, res, next) => {
-  try {
-  } catch (error) {}
-};
-
 exports.postFriend = async (req, res, next) => {
   try {
-  } catch (error) {}
+    const { name } = req?.body;
+    const { id } = req?.token;
+
+    const userInfo = await UserModel.findOne({ _id: id });
+
+    await userInfo.addFriend(name);
+
+    const updatedUserInfo = await UserModel.findOne({ _id: id });
+    return res.status(200).send({ ...updatedUserInfo });
+  } catch (error) {
+    return res.status(500).send({
+      errorMessage: 'There was an issue adding a friend, please try again!',
+    });
+  }
 };
 
 exports.deleteFriend = async (req, res, next) => {
   try {
-    const id = req.params?.id;
-  } catch (error) {}
-};
+    const friendName = req?.params?.name;
+    const { id } = req?.token;
 
-exports.getMessages = async (req, res, next) => {
-  try {
-  } catch (error) {}
+    const userInfo = await UserModel.findOne({ _id: id });
+
+    await userInfo.deleteFriend(friendName);
+
+    const updatedUserInfo = await UserModel.findOne({ _id: id });
+
+    return res.status(200).send({ ...updatedUserInfo });
+  } catch (error) {
+    return res.status(500).send({
+      errorMessage: 'There was an issue deleting a friend, please try again!',
+    });
+  }
 };
 
 exports.postMessage = async (req, res, next) => {
@@ -108,5 +124,15 @@ exports.postMessage = async (req, res, next) => {
 
 exports.getAllUsers = async (req, res, next) => {
   try {
-  } catch (error) {}
+    const filter = {};
+    const users = await User.find(filter);
+
+    return res.status(200).send({
+      users,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      errorMessage: 'There was an issue getting all users, please try again!',
+    });
+  }
 };

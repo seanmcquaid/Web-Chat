@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const User = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -24,6 +24,10 @@ const User = new mongoose.Schema({
         required: true,
       },
       isOnline: {
+        type: Boolean,
+        default: true,
+      },
+      isTyping: {
         type: Boolean,
         default: false,
       },
@@ -51,6 +55,14 @@ const User = new mongoose.Schema({
   ],
 });
 
-const UserModel = mongoose.model('user', User);
+User.methods.addFriend = function (name) {
+  this.friends = [...this.friends, { name, isOnline: true, isTyping: false }];
+};
+
+User.methods.deleteFriend = function (name) {
+  this.friends = this.friends.filter((friend) => friend.name !== name);
+};
+
+const UserModel = mongoose.model('user', UserSchema);
 
 module.exports = UserModel;

@@ -6,11 +6,11 @@ const checkAuth = require('../middleware/checkAuth');
 router
   .post('/login', usersController.postLogin)
   .post('/register', usersController.postRegister)
-  .get('/profile/:id', checkAuth, usersController.getProfile)
-  .put('/profile/:id', checkAuth, usersController.putProfile)
-  .delete('/friends/:id', checkAuth, usersController.deleteFriend)
+  .get('/getUserInfo', checkAuth, usersController.getUserInfo)
+  .delete('/friends/:name', checkAuth, usersController.deleteFriend)
   .post('/addFriend', checkAuth, usersController.postFriend)
   .get('/getMessages', checkAuth, usersController.getMessages)
-  .post('/sendMessage', checkAuth, usersController.postMessage);
+  .post('/sendMessage', checkAuth, usersController.postMessage)
+  .get('/getAllUsers', checkAuth, usersController.getAllUsers);
 
 module.exports = router;
