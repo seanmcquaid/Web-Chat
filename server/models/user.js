@@ -67,6 +67,16 @@ User.methods.addMessage = function (message) {
   this.messages = [...this.messages, message];
 };
 
+User.methods.hasFriend = function (name) {
+  this.friends.forEach((friend) => {
+    if (friend.name === name) {
+      return true;
+    }
+  });
+
+  return false;
+};
+
 const UserModel = mongoose.model('user', UserSchema);
 
 module.exports = UserModel;

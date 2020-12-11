@@ -87,6 +87,15 @@ exports.postFriend = async (req, res, next) => {
 
     const userInfo = await UserModel.findOne({ _id: id });
 
+    const hasFriendBeenAdded = await UserModel.hasFriend(name);
+
+    if (hasFriendBeenAdded) {
+      return res.status(401).send({
+        errorMessage:
+          'This friend has been added previously, please try with a different friend!',
+      });
+    }
+
     await userInfo.addFriend(name);
 
     const updatedUserInfo = await UserModel.findOne({ _id: id });
@@ -104,6 +113,14 @@ exports.deleteFriend = async (req, res, next) => {
     const { id } = req?.token;
 
     const userInfo = await UserModel.findOne({ _id: id });
+    const hasFriendBeenAdded = await UserModel.hasFriend(friendName);
+
+    if (!hasFriendBeenAdded) {
+      return res.status(401).send({
+        errorMessage:
+          "This friend hasn't been added previously, please try with a different friend!",
+      });
+    }
 
     await userInfo.deleteFriend(friendName);
 
