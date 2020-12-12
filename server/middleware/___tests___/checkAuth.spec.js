@@ -18,7 +18,28 @@ describe('checkAuth', () => {
     });
   });
 
-  it('Invalid token provided', () => {});
+  it('Invalid token provided', async () => {
+    const req = mockRequest({}, {}, 'Authorization');
+    const res = mockResponse();
+    const next = mockNext();
 
-  it('Valid token provided', () => {});
+    await checkAuth(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.send).toHaveBeenCalledWith({
+      errorMessage: 'This token is expired, please try again',
+    });
+  });
+
+  it('Valid token provided', async () => {
+    const req = mockRequest({}, {}, 'Authorization');
+    const res = mockResponse();
+    const next = mockNext();
+
+    jest.spyOn(jwt, 'verify').mockImplementationOnce(() => 'Valid Token');
+
+    await checkAuth(req, res, next);
+
+    expect(next).toHaveBeenCalled();
+  });
 });
