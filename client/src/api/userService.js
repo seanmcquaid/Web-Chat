@@ -5,3 +5,6 @@ export const login = ({ username, password }, config) =>
 
 export const register = ({ username, password }, config) =>
   apiClient.post('/users/register', { username, password }, config);
+
+export const getAllUsers = (config) =>
+  apiClient.get('/users/getAllUsers', config);

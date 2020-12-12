@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import { H1, LinkButton } from '../../components';
-import socket from '../../sockets';
 
 const UserHome = () => (
   <PageContainer>
