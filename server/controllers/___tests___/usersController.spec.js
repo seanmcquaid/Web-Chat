@@ -157,7 +157,37 @@ describe('usersController', () => {
     });
   });
 
-  it('getUserInfo', () => {});
+  it('getUserInfo', async () => {
+    const body = {
+      username: 'testUser',
+      password: 'testPassword',
+    };
+    const token = {
+      id: 1,
+    };
+    const req = mockRequest(body, {}, {}, token);
+    const res = mockResponse();
+    const next = mockNext();
+
+    const userInfo = {
+      _id: 1,
+      username: 'testUser',
+      password: 'testPassword',
+      isTyping: false,
+      isOnline: true,
+      friends: [],
+      messages: [],
+    };
+
+    jest.spyOn(UserModel, 'findOne').mockImplementationOnce(() => userInfo);
+
+    await usersController.getUserInfo(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({
+      ...userInfo,
+    });
+  });
 
   describe('postFriend', () => {
     it('Friend has already been added', () => {});
