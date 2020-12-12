@@ -373,5 +373,30 @@ describe('usersController', () => {
 
   it('postMessage', () => {});
 
-  it('getAllUsers', () => {});
+  it('getAllUsers', async () => {
+    const req = mockRequest();
+    const res = mockResponse();
+    const next = mockNext();
+
+    const users = [
+      {
+        _id: 1,
+        username: 'testUser',
+        password: 'testPassword',
+        isTyping: false,
+        isOnline: true,
+        friends: [],
+        messages: [],
+      },
+    ];
+
+    jest.spyOn(UserModel, 'find').mockImplementationOnce(() => users);
+
+    await usersController.getAllUsers(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({
+      users,
+    });
+  });
 });

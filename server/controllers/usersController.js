@@ -162,7 +162,7 @@ exports.postMessage = async (req, res, next) => {
 exports.getAllUsers = async (req, res, next) => {
   try {
     const filter = {};
-    const users = await User.find(filter);
+    const users = await UserModel.find(filter);
 
     return res.status(200).send({
       users,
