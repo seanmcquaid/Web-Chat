@@ -371,7 +371,95 @@ describe('usersController', () => {
     });
   });
 
-  it('postMessage', () => {});
+  it('postMessage', async () => {
+    const body = {
+      message: 'Hello there',
+      sentTo: 'testUser2',
+      sentFrom: 'testUser1',
+    };
+    const token = {
+      id: 1,
+    };
+    const req = mockRequest(body, {}, {}, token);
+    const res = mockResponse();
+    const next = mockNext();
+
+    const sendingUserInfo = {
+      _id: 1,
+      username: 'testUser1',
+      password: 'testPassword',
+      isTyping: false,
+      isOnline: true,
+      friends: [
+        {
+          name: 'testUser2',
+          isOnline: true,
+          isTyping: false,
+        },
+      ],
+      messages: [],
+    };
+
+    const receivingUserInfo = {
+      _id: 1,
+      username: 'testUser2',
+      password: 'testPassword',
+      isTyping: false,
+      isOnline: true,
+      friends: [
+        {
+          name: 'testUser1',
+          isOnline: true,
+          isTyping: false,
+        },
+      ],
+      messages: [],
+    };
+
+    jest
+      .spyOn(UserModel, 'findOne')
+      .mockImplementationOnce(() => sendingUserInfo);
+
+    jest
+      .spyOn(UserModel, 'findOne')
+      .mockImplementationOnce(() => receivingUserInfo);
+
+    jest.spyOn(UserModel, 'addMessage').mockImplementationOnce(() => true);
+    jest.spyOn(UserModel, 'addMessage').mockImplementationOnce(() => true);
+
+    const updatedUserInfo = {
+      _id: 1,
+      username: 'testUser1',
+      password: 'testPassword',
+      isTyping: false,
+      isOnline: true,
+      friends: [
+        {
+          name: 'testUser2',
+          isOnline: true,
+          isTyping: false,
+        },
+      ],
+      messages: [
+        {
+          message: 'Hello there',
+          sentTo: 'testUser2',
+          sentFrom: 'testUser1',
+        },
+      ],
+    };
+
+    jest
+      .spyOn(UserModel, 'findOne')
+      .mockImplementationOnce(() => updatedUserInfo);
+
+    await usersController.postMessage(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({
+      ...updatedUserInfo,
+    });
+  });
 
   it('getAllUsers', async () => {
     const req = mockRequest();
