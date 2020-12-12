@@ -90,9 +90,71 @@ describe('usersController', () => {
   });
 
   describe('postRegister', () => {
-    it('User already exists', () => {});
+    it('User already exists', async () => {
+      const body = {
+        username: 'testUser',
+        password: 'testPassword',
+      };
+      const req = mockRequest(body);
+      const res = mockResponse();
+      const next = mockNext();
 
-    it('User successfully registers', () => {});
+      const userInfo = {
+        _id: 1,
+        username: 'testUser',
+        password: 'testPassword1',
+        isTyping: false,
+        isOnline: true,
+        friends: [],
+        messages: [],
+      };
+
+      jest.spyOn(UserModel, 'findOne').mockImplementationOnce(() => userInfo);
+
+      await usersController.postRegister(req, res, next);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.send).toHaveBeenCalledWith({
+        errorMessage:
+          'This user already exists, please try a different username!',
+      });
+    });
+
+    it('User successfully registers', async () => {
+      const body = {
+        username: 'testUser',
+        password: 'testPassword',
+      };
+      const req = mockRequest(body);
+      const res = mockResponse();
+      const next = mockNext();
+
+      const userInfo = {
+        _id: 1,
+        username: 'testUser',
+        password: 'testPassword',
+        isTyping: false,
+        isOnline: true,
+        friends: [],
+        messages: [],
+      };
+
+      jest.spyOn(UserModel, 'findOne').mockImplementationOnce(() => null);
+
+      jest.spyOn(bcrypt, 'hash').mockImplementationOnce(() => 'testPassword');
+
+      jest.spyOn(UserModel, 'create').mockImplementationOnce(() => userInfo);
+
+      jest.spyOn(jwt, 'sign').mockImplementationOnce(() => 'Valid Token');
+
+      await usersController.postRegister(req, res, next);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.send).toHaveBeenCalledWith({
+        token: 'Valid Token',
+        isOnline: true,
+      });
+    });
   });
 
   it('getUserInfo', () => {});
