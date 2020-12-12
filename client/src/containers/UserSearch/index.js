@@ -7,10 +7,10 @@ const UserSearch = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [inputText, setInputText] = useState('');
   const [users, setUsers] = useState([]);
-  const isCurrent = useRef(true);
+  const isMounted = useRef(true);
 
   useEffect(() => {
-    if (isCurrent.current) {
+    if (isMounted.current) {
       const cancelToken = Axios.CancelToken;
       const source = cancelToken.source();
       const config = {
@@ -27,7 +27,7 @@ const UserSearch = () => {
         });
     }
     return () => {
-      isCurrent.current = false;
+      isMounted.current = false;
     };
   }, []);
 
