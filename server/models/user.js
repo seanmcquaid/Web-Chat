@@ -67,7 +67,7 @@ UserSchema.methods.addMessage = function (message) {
   this.messages = [...this.messages, message];
 };
 
-UserSchema.methods.hasFriend = function (name) {
+UserSchema.statics.hasFriend = function (name) {
   this.friends.forEach((friend) => {
     if (friend.name === name) {
       return true;

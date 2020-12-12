@@ -249,7 +249,7 @@ describe('usersController', () => {
 
       jest.spyOn(UserModel, 'hasFriend').mockImplementationOnce(() => false);
 
-      jest.spyOn(UserModel, 'addFriend').mockImplementationOnce();
+      jest.spyOn(UserModel, 'addFriend').mockImplementationOnce(() => true);
 
       const updatedUserInfo = {
         _id: 1,
@@ -346,7 +346,7 @@ describe('usersController', () => {
 
       jest.spyOn(UserModel, 'hasFriend').mockImplementationOnce(() => true);
 
-      jest.spyOn(UserModel, 'deleteFriend').mockImplementationOnce();
+      jest.spyOn(UserModel, 'deleteFriend').mockImplementationOnce(() => true);
 
       const updatedUserInfo = {
         _id: 1,
