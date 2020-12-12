@@ -267,6 +267,10 @@ describe('usersController', () => {
         messages: [],
       };
 
+      jest
+        .spyOn(UserModel, 'findOne')
+        .mockImplementationOnce(() => updatedUserInfo);
+
       await usersController.postFriend(req, res, next);
 
       expect(res.status).toHaveBeenCalledWith(200);
@@ -277,9 +281,94 @@ describe('usersController', () => {
   });
 
   describe('deleteFriend', () => {
-    it("Friend hasn't been added", () => {});
+    it("Friend hasn't been added", async () => {
+      const params = {
+        name: 'New Friend Name',
+      };
+      const token = {
+        id: 1,
+      };
+      const req = mockRequest({}, params, {}, token);
+      const res = mockResponse();
+      const next = mockNext();
 
-    it('Friend is successfully deleted', () => {});
+      const userInfo = {
+        _id: 1,
+        username: 'testUser',
+        password: 'testPassword',
+        isTyping: false,
+        isOnline: true,
+        friends: [],
+        messages: [],
+      };
+
+      jest.spyOn(UserModel, 'findOne').mockImplementationOnce(() => userInfo);
+
+      jest.spyOn(UserModel, 'hasFriend').mockImplementationOnce(() => false);
+
+      await usersController.deleteFriend(req, res, next);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.send).toHaveBeenCalledWith({
+        errorMessage:
+          "This friend hasn't been added previously, please try with a different friend!",
+      });
+    });
+
+    it('Friend is successfully deleted', async () => {
+      const params = {
+        name: 'New Friend Name',
+      };
+      const token = {
+        id: 1,
+      };
+      const req = mockRequest({}, params, {}, token);
+      const res = mockResponse();
+      const next = mockNext();
+
+      const userInfo = {
+        _id: 1,
+        username: 'testUser',
+        password: 'testPassword',
+        isTyping: false,
+        isOnline: true,
+        friends: [
+          {
+            name: 'New Friend Name',
+            isOnline: true,
+            isTyping: false,
+          },
+        ],
+        messages: [],
+      };
+
+      jest.spyOn(UserModel, 'findOne').mockImplementationOnce(() => userInfo);
+
+      jest.spyOn(UserModel, 'hasFriend').mockImplementationOnce(() => true);
+
+      jest.spyOn(UserModel, 'deleteFriend').mockImplementationOnce();
+
+      const updatedUserInfo = {
+        _id: 1,
+        username: 'testUser',
+        password: 'testPassword',
+        isTyping: false,
+        isOnline: true,
+        friends: [],
+        messages: [],
+      };
+
+      jest
+        .spyOn(UserModel, 'findOne')
+        .mockImplementationOnce(() => updatedUserInfo);
+
+      await usersController.deleteFriend(req, res, next);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.send).toHaveBeenCalledWith({
+        ...updatedUserInfo,
+      });
+    });
   });
 
   it('postMessage', () => {});
