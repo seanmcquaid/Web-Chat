@@ -190,9 +190,90 @@ describe('usersController', () => {
   });
 
   describe('postFriend', () => {
-    it('Friend has already been added', () => {});
+    it('Friend has already been added', async () => {
+      const body = {
+        name: 'New Friend Name',
+      };
+      const token = {
+        id: 1,
+      };
+      const req = mockRequest(body, {}, {}, token);
+      const res = mockResponse();
+      const next = mockNext();
 
-    it('Friend was successfully added', () => {});
+      const userInfo = {
+        _id: 1,
+        username: 'testUser',
+        password: 'testPassword',
+        isTyping: false,
+        isOnline: true,
+        friends: [],
+        messages: [],
+      };
+
+      jest.spyOn(UserModel, 'findOne').mockImplementationOnce(() => userInfo);
+
+      jest.spyOn(UserModel, 'hasFriend').mockImplementationOnce(() => true);
+
+      await usersController.postFriend(req, res, next);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.send).toHaveBeenCalledWith({
+        errorMessage:
+          'This friend has been added previously, please try with a different friend!',
+      });
+    });
+
+    it('Friend was successfully added', async () => {
+      const body = {
+        name: 'New Friend Name',
+      };
+      const token = {
+        id: 1,
+      };
+      const req = mockRequest(body, {}, {}, token);
+      const res = mockResponse();
+      const next = mockNext();
+
+      const userInfo = {
+        _id: 1,
+        username: 'testUser',
+        password: 'testPassword',
+        isTyping: false,
+        isOnline: true,
+        friends: [],
+        messages: [],
+      };
+
+      jest.spyOn(UserModel, 'findOne').mockImplementationOnce(() => userInfo);
+
+      jest.spyOn(UserModel, 'hasFriend').mockImplementationOnce(() => false);
+
+      jest.spyOn(UserModel, 'addFriend').mockImplementationOnce();
+
+      const updatedUserInfo = {
+        _id: 1,
+        username: 'testUser',
+        password: 'testPassword',
+        isTyping: false,
+        isOnline: true,
+        friends: [
+          {
+            name: 'New Friend Name',
+            isOnline: true,
+            isTyping: false,
+          },
+        ],
+        messages: [],
+      };
+
+      await usersController.postFriend(req, res, next);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.send).toHaveBeenCalledWith({
+        ...updatedUserInfo,
+      });
+    });
   });
 
   describe('deleteFriend', () => {
