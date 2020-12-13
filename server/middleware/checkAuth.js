@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const checkAuth = async (req, res, next) => {
-  const token = req?.headers('Authorization');
+  const token = req?.headers?.authorization;
   if (!token) {
     return res.status(401).send({
       errorMessage: 'There is no token, please try again',

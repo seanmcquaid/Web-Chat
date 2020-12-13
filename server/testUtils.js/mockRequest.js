@@ -1,6 +1,8 @@
 const mockRequest = (body = {}, params = {}, header = null, token = {}) => ({
   body,
-  headers: () => (header === 'Authorization' ? 'Valid Token' : null),
+  headers: {
+    authorization: header ?? null,
+  },
   params,
   token,
 });

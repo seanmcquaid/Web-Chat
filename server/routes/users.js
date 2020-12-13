@@ -9,7 +9,6 @@ router
   .get('/getUserInfo', checkAuth, usersController.getUserInfo)
   .delete('/friends/:name', checkAuth, usersController.deleteFriend)
   .post('/addFriend', checkAuth, usersController.postFriend)
-  .get('/getMessages', checkAuth, usersController.getMessages)
   .post('/sendMessage', checkAuth, usersController.postMessage)
   .get('/getAllUsers', checkAuth, usersController.getAllUsers);
 
