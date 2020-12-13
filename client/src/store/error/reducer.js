@@ -10,7 +10,7 @@ const reducer = (state = initialState, action) => {
     case REGISTER_ERROR:
       return {
         ...state,
-        errorMessage: action.error,
+        errorMessage: action.error.response.data.errorMessage,
       };
     default:
       return {

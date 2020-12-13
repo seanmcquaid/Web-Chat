@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { H1 } from '../../components';
+import { ErrorMessage, H1 } from '../../components';
 import LoginForm from './LoginForm';
 
 const Login = () => {
@@ -7,6 +7,7 @@ const Login = () => {
     <PageContainer>
       <Header>
         <H1>Login</H1>
+        <ErrorMessage />
       </Header>
       <Main>
         <LoginForm />
