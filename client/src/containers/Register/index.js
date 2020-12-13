@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { H1 } from '../../components';
+import { ErrorMessage, H1 } from '../../components';
 import RegisterForm from './RegisterForm';
 
 const Register = () => {
@@ -7,6 +7,7 @@ const Register = () => {
     <PageContainer>
       <Header>
         <H1>Register</H1>
+        <ErrorMessage />
       </Header>
       <Main>
         <RegisterForm />
