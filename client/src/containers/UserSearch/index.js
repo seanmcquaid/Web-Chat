@@ -2,10 +2,12 @@ import Axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { getAllUsers } from '../../api/userService';
 import { LoadingSpinner } from '../../components';
+import Fuse from 'fuse.js';
 
 const UserSearch = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [inputText, setInputText] = useState('');
+  const [originalUsers, setOriginalUsers] = useState([]);
   const [users, setUsers] = useState([]);
   const isMounted = useRef(true);
 
@@ -18,7 +20,7 @@ const UserSearch = () => {
       };
       getAllUsers(config)
         .then(({ data }) => {
-          setUsers(data);
+          setOriginalUsers(data);
         })
         .catch((err) => console.log(err))
         .finally(() => {
