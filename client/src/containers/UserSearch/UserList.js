@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -16,7 +17,7 @@ const UserList = ({ users }) => {
   return (
     <StyledUserList>
       {displayedUsers.map((user, i) => (
-        <User></User>
+        <User key={i}></User>
       ))}
     </StyledUserList>
   );
@@ -25,5 +26,9 @@ const UserList = ({ users }) => {
 const StyledUserList = styled.ul``;
 
 const User = styled.li``;
+
+UserList.propTypes = {
+  users: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+};
 
 export default UserList;
