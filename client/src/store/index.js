@@ -5,11 +5,15 @@ import thunkMiddleware from 'redux-thunk';
 import friendsReducer from './friends/reducer';
 import messagesReducer from './messages/reducer';
 import userReducer from './user/reducer';
+import errorReducer from './error/reducer';
+import loadingReducer from '../loading/reducer';
 
 export const rootReducer = combineReducers({
   friends: friendsReducer,
   messages: messagesReducer,
   user: userReducer,
+  error: errorReducer,
+  loading: loadingReducer,
 });
 
 const persistConfig = {

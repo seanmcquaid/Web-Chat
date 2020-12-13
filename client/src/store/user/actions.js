@@ -1,13 +1,8 @@
 import Axios from 'axios';
 import * as userService from '../../api/userService';
-import {
-  LOGIN_ERROR,
-  LOGIN_LOADING,
-  LOGIN_SUCCESS,
-  REGISTER_LOADING,
-  REGISTER_SUCCESS,
-  REGISTER_ERROR,
-} from './types';
+import { LOGIN_SUCCESS, REGISTER_SUCCESS } from './types';
+import { LOGIN_LOADING, REGISTER_LOADING } from '../loading/types';
+import { LOGIN_ERROR, REGISTER_ERROR } from '../error/types';
 
 export const loginAction = (username, password) => (dispatch, getState) => {
   dispatch({
