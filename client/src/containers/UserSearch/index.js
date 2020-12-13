@@ -53,22 +53,26 @@ const UserSearch = () => {
     };
   }, [token]);
 
-  console.log(state);
+  console.log(state, inputText);
 
   const onChange = useCallback(
     (event) => {
       const options = {
         keys: ['username'],
         isCaseSensitive: false,
+        includeScore: true,
       };
 
       const fuse = new Fuse(originalUsers, options);
-      console.log(fuse._docs);
+      const results = fuse.search(event.target.value);
 
       setState((prevState) => ({
         ...prevState,
         [event.target.name]: event.target.value,
-        searchedUsers: fuse._docs,
+        searchedUsers:
+          event.target.value.length > 0
+            ? results.map(({ item }) => item)
+            : originalUsers,
       }));
     },
     [originalUsers]
