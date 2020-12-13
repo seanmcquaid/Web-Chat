@@ -14,10 +14,14 @@ const UserList = ({ users }) => {
 
   const addFriendButtonOnClick = useCallback((name) => {}, []);
 
+  if (users.length === 0) {
+    return <div>No Users found</div>;
+  }
+
   return (
     <StyledUserList>
-      {displayedUsers.map((user, i) => (
-        <User key={i}></User>
+      {displayedUsers.map(({ username, _id }) => (
+        <User key={_id}>{username}</User>
       ))}
     </StyledUserList>
   );

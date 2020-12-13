@@ -31,38 +31,47 @@ const UserSearch = () => {
       };
       getAllUsers(config)
         .then(({ data: { users } }) => {
-          setState({
-            ...state,
+          setState((prevState) => ({
+            ...prevState,
             originalUsers: users,
             searchedUsers: users,
             isLoading: false,
-          });
+          }));
           source.cancel();
         })
         .catch((err) => {
           console.log(err);
-          setState({
-            ...state,
+          setState((prevState) => ({
+            ...prevState,
             isLoading: false,
-          });
+          }));
           source.cancel();
         });
     }
     return () => {
       isMounted.current = false;
     };
-  }, [token, state]);
+  }, [token]);
 
   console.log(state);
 
   const onChange = useCallback(
     (event) => {
-      setState({
-        ...state,
+      const options = {
+        keys: ['username'],
+        isCaseSensitive: false,
+      };
+
+      const fuse = new Fuse(originalUsers, options);
+      console.log(fuse._docs);
+
+      setState((prevState) => ({
+        ...prevState,
         [event.target.name]: event.target.value,
-      });
+        searchedUsers: fuse._docs,
+      }));
     },
-    [state]
+    [originalUsers]
   );
 
   if (isLoading) {
