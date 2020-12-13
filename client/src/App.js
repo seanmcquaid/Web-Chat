@@ -5,6 +5,8 @@ import configureStore from './store';
 
 const { store, persistor } = configureStore();
 
+console.log(store.getState());
+
 const App = () => {
   return (
     <Provider store={store}>

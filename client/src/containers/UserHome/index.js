@@ -8,8 +8,8 @@ const UserHome = () => (
     </Header>
     <Main>
       <LinksContainer>
-        <LinkButton to='/'>User Search</LinkButton>
-        <LinkButton to='/'>Friends List</LinkButton>
+        <LinkButton to='/userSearch'>User Search</LinkButton>
+        <LinkButton to='/friendsList'>Friends List</LinkButton>
       </LinksContainer>
     </Main>
   </PageContainer>

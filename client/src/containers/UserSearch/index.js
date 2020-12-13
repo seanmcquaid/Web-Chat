@@ -17,6 +17,7 @@ const UserSearch = () => {
       const source = cancelToken.source();
       const config = {
         cancelToken: source.token,
+        headers: {},
       };
       getAllUsers(config)
         .then(({ data }) => {
