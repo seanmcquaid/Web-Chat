@@ -87,7 +87,7 @@ exports.postFriend = async (req, res, next) => {
 
     const userInfo = await UserModel.findOne({ _id: id });
 
-    const hasFriendBeenAdded = await UserModel.hasFriend(name);
+    const hasFriendBeenAdded = await userInfo.hasFriend(name);
 
     if (hasFriendBeenAdded) {
       return res.status(401).send({

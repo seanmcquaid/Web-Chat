@@ -68,6 +68,7 @@ UserSchema.methods.addMessage = function addMessage(message) {
 };
 
 UserSchema.methods.hasFriend = function hasFriend(name) {
+  console.log(this.friends);
   this.friends.forEach((friend) => {
     if (friend.name === name) {
       return true;
