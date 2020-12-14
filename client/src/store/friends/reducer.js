@@ -2,8 +2,8 @@ const initialState = {
   friendsList: [],
 };
 
-const reducer = (state = initialState, { type, payload }) => {
-  switch (type) {
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
     default:
       return state;
   }

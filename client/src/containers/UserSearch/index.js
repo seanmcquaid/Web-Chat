@@ -53,8 +53,6 @@ const UserSearch = () => {
     };
   }, [token]);
 
-  console.log(state, inputText);
-
   const onChange = useCallback(
     (event) => {
       const options = {

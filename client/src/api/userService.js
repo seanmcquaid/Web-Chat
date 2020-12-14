@@ -8,3 +8,6 @@ export const register = ({ username, password }, config) =>
 
 export const getAllUsers = (config) =>
   apiClient.get('/users/getAllUsers', config);
+
+export const addFriend = (name, config) =>
+  apiClient.post('/users/addFriend', { name }, config);
