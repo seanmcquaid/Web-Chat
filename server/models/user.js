@@ -55,19 +55,19 @@ const UserSchema = new mongoose.Schema({
   ],
 });
 
-UserSchema.methods.addFriend = function (name) {
+UserSchema.methods.addFriend = function addFriend(name) {
   this.friends = [...this.friends, { name, isOnline: true, isTyping: false }];
 };
 
-UserSchema.methods.deleteFriend = function (name) {
+UserSchema.methods.deleteFriend = function deleteFriend(name) {
   this.friends = this.friends.filter((friend) => friend.name !== name);
 };
 
-UserSchema.methods.addMessage = function (message) {
+UserSchema.methods.addMessage = function addMessage(message) {
   this.messages = [...this.messages, message];
 };
 
-UserSchema.methods.hasFriend = function (name) {
+UserSchema.methods.hasFriend = function hasFriend(name) {
   this.friends.forEach((friend) => {
     if (friend.name === name) {
       return true;

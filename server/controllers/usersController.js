@@ -101,6 +101,7 @@ exports.postFriend = async (req, res, next) => {
     const updatedUserInfo = await UserModel.findOne({ _id: id });
     return res.status(200).send({ ...updatedUserInfo });
   } catch (error) {
+    console.log(error);
     return res.status(500).send({
       errorMessage: 'There was an issue adding a friend, please try again!',
     });
