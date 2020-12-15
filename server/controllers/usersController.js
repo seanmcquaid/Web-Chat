@@ -16,8 +16,6 @@ exports.postLogin = async (req, res, next) => {
 
     const isSamePassword = await bcrypt.compare(password, userInfo.password);
 
-    console.log(userInfo.password.length);
-
     if (!isSamePassword) {
       return res.status(401).send({
         errorMessage: "The passwords don't match, please try again!",
@@ -107,7 +105,7 @@ exports.postFriend = async (req, res, next) => {
     await userInfo.addFriend(name);
 
     const updatedUserInfo = await UserModel.findOne({ _id: id });
-    return res.status(200).send({ ...updatedUserInfo });
+    return res.status(200).send({ ...updatedUserInfo._doc });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
@@ -135,7 +133,7 @@ exports.deleteFriend = async (req, res, next) => {
 
     const updatedUserInfo = await UserModel.findOne({ _id: id });
 
-    return res.status(200).send({ ...updatedUserInfo });
+    return res.status(200).send({ ...updatedUserInfo._doc });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
@@ -160,7 +158,7 @@ exports.postMessage = async (req, res, next) => {
 
     const updatedUserInfo = await UserModel.findOne({ _id: id });
 
-    return res.status(200).send({ ...updatedUserInfo });
+    return res.status(200).send({ ...updatedUserInfo._doc });
   } catch (error) {
     return res.status(500).send({
       errorMessage: 'There was an issue sending a message, please try again!',
