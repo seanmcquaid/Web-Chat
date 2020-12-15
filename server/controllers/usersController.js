@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const UserModel = require('../models/user');
 require('dotenv').config();
 
@@ -14,7 +14,9 @@ exports.postLogin = async (req, res, next) => {
       });
     }
 
-    const isSamePassword = await bcrypt.compare(userInfo.password, password);
+    const isSamePassword = await bcrypt.compare(password, userInfo.password);
+
+    console.log(userInfo.password.length);
 
     if (!isSamePassword) {
       return res.status(401).send({
