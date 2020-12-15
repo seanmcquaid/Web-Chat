@@ -18,7 +18,7 @@ const Routes = () => (
     <ProtectedRoute exact path='/userHome' component={UserHome} />
     <ProtectedRoute exact path='/friendsList' component={FriendsList} />
     <ProtectedRoute exact path='/userSearch' component={UserSearch} />
-    <ProtectedRoute exact path='/chatWindow/:id' component={ChatWindow} />
+    <ProtectedRoute exact path='/chatWindow/:name' component={ChatWindow} />
   </BrowserRouter>
 );
 

@@ -23,7 +23,7 @@ export const addFriendAction = (name) => (dispatch, getState) => {
     .then(({ data }) => {
       dispatch({
         type: ADD_FRIEND_SUCCESS,
-        friends: data,
+        friends: data?.friends,
       });
     })
     .catch((err) => {

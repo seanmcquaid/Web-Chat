@@ -63,3 +63,5 @@ export const registerAction = (username, password) => (dispatch, getState) => {
       source.cancel();
     });
 };
+
+export const getUserInfoAction = () => (dispatch, getState) => {};
