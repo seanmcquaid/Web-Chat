@@ -1,5 +1,6 @@
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import storage from 'redux-persist/lib/storage';
 import thunkMiddleware from 'redux-thunk';
 import friendsReducer from './friends/reducer';
@@ -28,7 +29,7 @@ const configureStore = (preloadedState) => {
   const middlewareEnhancer = applyMiddleware(...middlewares);
 
   const enhancers = [middlewareEnhancer];
-  const composedEnhancers = compose(...enhancers);
+  const composedEnhancers = composeWithDevTools(...enhancers);
 
   const store = createStore(
     persistedReducer,

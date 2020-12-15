@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getAllUsers } from '../../api/userService';
-import { H1, LoadingSpinner, TextInput } from '../../components';
+import { ErrorMessage, H1, LoadingSpinner, TextInput } from '../../components';
 import Fuse from 'fuse.js';
 import { useSelector } from 'react-redux';
 import { tokenSelector } from '../../store/user/selectors';
@@ -84,6 +84,7 @@ const UserSearch = () => {
     <PageContainer>
       <Header>
         <H1>User Search</H1>
+        <ErrorMessage />
       </Header>
       <MainContent>
         <TextInput
