@@ -87,6 +87,12 @@ exports.postFriend = async (req, res, next) => {
 
     const userInfo = await UserModel.findOne({ _id: id });
 
+    if (userInfo.username === name) {
+      return res.status(401).send({
+        errorMessage: "You can't add yourself as a friend!",
+      });
+    }
+
     const hasFriendBeenAdded = await userInfo.hasFriend(name);
 
     if (hasFriendBeenAdded) {

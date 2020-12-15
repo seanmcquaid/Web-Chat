@@ -55,8 +55,9 @@ const UserSchema = new mongoose.Schema({
   ],
 });
 
-UserSchema.methods.addFriend = function addFriend(name) {
+UserSchema.methods.addFriend = async function addFriend(name) {
   this.friends = [...this.friends, { name, isOnline: true, isTyping: false }];
+  return await this.save();
 };
 
 UserSchema.methods.deleteFriend = function deleteFriend(name) {
@@ -68,12 +69,12 @@ UserSchema.methods.addMessage = function addMessage(message) {
 };
 
 UserSchema.methods.hasFriend = function hasFriend(name) {
-  console.log(this.friends);
-  this.friends.forEach((friend) => {
+  for (let i = 0; i < this.friends.length; i++) {
+    const friend = this.friends[i];
     if (friend.name === name) {
       return true;
     }
-  });
+  }
 
   return false;
 };

@@ -190,6 +190,38 @@ describe('usersController', () => {
   });
 
   describe('postFriend', () => {
+    it('User tries to add themselves as a friend', async () => {
+      const body = {
+        name: 'New Friend Name',
+      };
+      const token = {
+        id: 1,
+      };
+      const req = mockRequest(body, {}, {}, token);
+      const res = mockResponse();
+      const next = mockNext();
+
+      const userInfo = {
+        _id: 1,
+        username: 'New Friend Name',
+        password: 'testPassword',
+        isTyping: false,
+        isOnline: true,
+        friends: [],
+        messages: [],
+      };
+
+      jest.spyOn(UserModel, 'findOne').mockImplementationOnce(() => userInfo);
+
+      jest.spyOn(UserModel, 'hasFriend').mockImplementationOnce(() => true);
+
+      await usersController.postFriend(req, res, next);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.send).toHaveBeenCalledWith({
+        errorMessage: "You can't add yourself as a friend!",
+      });
+    });
     it('Friend has already been added', async () => {
       const body = {
         name: 'New Friend Name',
