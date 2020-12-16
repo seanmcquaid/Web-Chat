@@ -15,7 +15,6 @@ import {
   LOGIN_ERROR,
   REGISTER_ERROR,
 } from '../error/types';
-import apiClient from '../../api';
 
 export const loginAction = (username, password) => (dispatch, getState) => {
   dispatch({
