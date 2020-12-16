@@ -9,7 +9,7 @@ const reducer = (state = initialState, action) => {
     case ADD_FRIEND_SUCCESS:
       return {
         ...state,
-        friendsList: [...action.friends],
+        friendsList: [...action?.friends],
       };
     default:
       return state;
