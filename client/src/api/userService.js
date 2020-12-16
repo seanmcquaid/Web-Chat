@@ -11,3 +11,6 @@ export const getAllUsers = (config) =>
 
 export const addFriend = (name, config) =>
   apiClient.post('/users/addFriend', { name }, config);
+
+export const getUserInfo = (config) =>
+  apiClient.get('/users/getUserInfo', config);
