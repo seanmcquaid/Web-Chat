@@ -10,7 +10,7 @@ const reducer = (state = initialState, action) => {
     case GET_USER_INFO_SUCCESS:
       return {
         ...state,
-        messages: [...action?.userInfo?.friends],
+        messages: [...action?.userInfo?.messages],
         isTyping: action?.userInfo?.isTyping,
       };
     default:

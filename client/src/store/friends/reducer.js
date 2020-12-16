@@ -1,3 +1,4 @@
+import { GET_USER_INFO_SUCCESS } from '../user/types';
 import { ADD_FRIEND_SUCCESS } from './types';
 
 const initialState = {
@@ -10,6 +11,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         friendsList: [...action?.friends],
+      };
+    case GET_USER_INFO_SUCCESS:
+      return {
+        ...state,
+        friendsList: [...action?.userInfo?.friends],
       };
     default:
       return state;
