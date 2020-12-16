@@ -11,7 +11,7 @@ const reducer = (state = initialState, action) => {
     case ADD_FRIEND_ERROR:
       return {
         ...state,
-        errorMessage: action.error.response.data.errorMessage,
+        errorMessage: action?.error?.response?.data?.errorMessage,
       };
     default:
       return {

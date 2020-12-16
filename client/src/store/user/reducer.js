@@ -11,8 +11,8 @@ const reducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        token: action.userInfo.token,
-        isOnline: action.userInfo.isOnline,
+        token: action?.userInfo?.token,
+        isOnline: action?.userInfo?.isOnline,
       };
     default:
       return state;
