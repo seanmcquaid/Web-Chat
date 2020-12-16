@@ -71,7 +71,7 @@ exports.getUserInfo = async (req, res, next) => {
     const { id } = req?.token;
     const userInfo = await UserModel.findOne({ _id: id });
 
-    return res.status(200).send({ ...userInfo });
+    return res.status(200).send({ ...userInfo._doc });
   } catch (error) {
     return res.status(500).send({
       errorMessage:
@@ -179,4 +179,18 @@ exports.getAllUsers = async (req, res, next) => {
       errorMessage: 'There was an issue getting all users, please try again!',
     });
   }
+};
+
+exports.postLogout = async (req, res, next) => {
+  const { id } = req?.token;
+
+  const userInfo = await UserModel.findOne({ _id: id });
+
+  userInfo.isOnline = false;
+  userInfo.isTyping = false;
+  req.token = null;
+
+  userInfo.save();
+
+  // sketched out solution for now
 };
