@@ -10,7 +10,7 @@ import {
   emitSetUserTyping,
   emitUserNoLongerTyping,
 } from '../../sockets/emit';
-import { GET_IS_FRIEND_TYPING } from '../../sockets/types';
+import { RECEIVE_IS_FRIEND_TYPING } from '../../sockets/types';
 import { tokenSelector } from '../../store/user/selectors';
 
 const MessageForm = () => {
@@ -32,7 +32,7 @@ const MessageForm = () => {
   }, [name]);
 
   useEffect(() => {
-    socket.on(GET_IS_FRIEND_TYPING, (data) => {
+    socket.on(RECEIVE_IS_FRIEND_TYPING, (data) => {
       setIsFriendTyping(data);
     });
     return () => socket.disconnect();

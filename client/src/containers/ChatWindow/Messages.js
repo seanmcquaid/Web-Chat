@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import socket from '../../sockets';
 import { emitGetCurrentMessages } from '../../sockets/emit';
-import { GET_CURRENT_MESSAGES } from '../../sockets/types';
+import { RECEIVE_CURRENT_MESSAGES } from '../../sockets/types';
 import { tokenSelector } from '../../store/user/selectors';
 
 const Messages = () => {
@@ -23,7 +23,7 @@ const Messages = () => {
   }, [name, token]);
 
   useEffect(() => {
-    socket.on(GET_CURRENT_MESSAGES, (data) => {
+    socket.on(RECEIVE_CURRENT_MESSAGES, (data) => {
       setMessages(data);
     });
     return () => socket.disconnect();
