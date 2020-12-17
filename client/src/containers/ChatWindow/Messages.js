@@ -5,7 +5,7 @@ import socket from '../../sockets';
 import { emitGetCurrentMessages } from '../../sockets/emit';
 import { tokenSelector } from '../../store/user/selectors';
 
-const ChatWindow = () => {
+const Messages = () => {
   const [messages, setMessages] = useState();
   const { name } = useParams();
   const token = useSelector(tokenSelector);
@@ -24,15 +24,6 @@ const ChatWindow = () => {
     return () => {};
   }, []);
 
-  useEffect(() => {
-    return () => {};
-  }, []);
-
-  useEffect(() => {
-    return () => {};
-  }, []);
-
   return <div></div>;
 };
-
-export default ChatWindow;
+export default Messages;
