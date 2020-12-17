@@ -1,19 +1,17 @@
 import { useEffect } from 'react';
+import styled from 'styled-components';
+import MessageForm from './MessageForm';
+import Messages from './Messages';
 
 const ChatWindow = () => {
-  useEffect(() => {
-    return () => {};
-  }, []);
-
-  useEffect(() => {
-    return () => {};
-  }, []);
-
-  useEffect(() => {
-    return () => {};
-  }, []);
-
-  return <div></div>;
+  return (
+    <PageContainer>
+      <Messages />
+      <MessageForm />
+    </PageContainer>
+  );
 };
+
+const PageContainer = styled.div``;
 
 export default ChatWindow;

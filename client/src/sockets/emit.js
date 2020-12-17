@@ -3,6 +3,7 @@ import {
   GET_CURRENT_MESSAGES,
   GET_IS_FRIEND_TYPING,
   SEND_MESSAGE,
+  SET_USER_NOT_TYPING,
   SET_USER_TYPING,
 } from './types';
 
@@ -14,6 +15,9 @@ export const emitIsFriendTyping = (friendName) =>
 
 export const emitSetUserTyping = (token) =>
   socket.emit(SET_USER_TYPING, { token });
+
+export const emitUserNoLongerTyping = (token) =>
+  socket.emit(SET_USER_NOT_TYPING, { token });
 
 export const emitSendMessage = (messageInfo) =>
   socket.emit(SEND_MESSAGE, { ...messageInfo });
