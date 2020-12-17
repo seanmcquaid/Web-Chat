@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import socket from '../../sockets';
 import { emitGetCurrentMessages } from '../../sockets/emit';
+import { GET_CURRENT_MESSAGES } from '../../sockets/types';
 import { tokenSelector } from '../../store/user/selectors';
 
 const Messages = () => {
@@ -21,7 +22,10 @@ const Messages = () => {
   }, [name, token]);
 
   useEffect(() => {
-    return () => {};
+    socket.on(GET_CURRENT_MESSAGES, (data) => {
+      setMessages(data);
+    });
+    return () => socket.disconnect();
   }, []);
 
   return <div></div>;
