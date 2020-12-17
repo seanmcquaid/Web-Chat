@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import MessageForm from './MessageForm';
 import Messages from './Messages';
