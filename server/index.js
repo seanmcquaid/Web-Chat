@@ -11,7 +11,12 @@ const usersRouter = require('./routes/users');
 const app = express();
 const mongoose = require('mongoose');
 
-const { message } = require('./sockets');
+const {
+  sendMessage,
+  currentMessages,
+  isFriendTyping,
+  setUserTyping,
+} = require('./sockets');
 
 app.use(cors());
 
@@ -37,7 +42,10 @@ const io = socketIo(server, {
 
 io.on('connection', (socket) => {
   console.log('Client connected');
-  message(socket);
+  sendMessage(socket);
+  currentMessages(socket);
+  isFriendTyping(socket);
+  setUserTyping(socket);
   io.on('error', (err) => {
     console.log(err);
   });
