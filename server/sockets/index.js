@@ -45,7 +45,8 @@ exports.currentMessages = (socket) => {
 
 exports.isFriendTyping = (socket) => {
   socket.on(GET_IS_FRIEND_TYPING, async ({ friendName }) => {
-    // get typing status from model
+    const friendInfo = await UserModel.findOne({ username: friendName });
+    const isFriendTyping = friendInfo.isTyping;
     socket.emit(RECEIVE_IS_FRIEND_TYPING, isFriendTyping);
   });
 };
