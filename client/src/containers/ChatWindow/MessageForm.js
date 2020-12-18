@@ -41,9 +41,7 @@ const MessageForm = () => {
   useEffect(() => {
     if (message === messageRef.current && !isUserTyping) {
       emitUserNoLongerTyping(token);
-      return () => {
-        socket.disconnect();
-      };
+      return () => socket.disconnect();
     }
   }, [message, messageRef, isUserTyping, token]);
 
@@ -79,9 +77,9 @@ const MessageForm = () => {
 
   return (
     <Form onSubmit={onSubmit}>
-      <FriendTypingText>
-        {isFriendTyping ? `${name} is typing currently` : null}
-      </FriendTypingText>
+      {isFriendTyping && (
+        <FriendTypingText>{`${name} is typing currently`}</FriendTypingText>
+      )}
       <TextInput
         onChange={onChange}
         value={message}
