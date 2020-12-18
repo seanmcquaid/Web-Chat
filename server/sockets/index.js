@@ -33,7 +33,12 @@ exports.sendMessage = (socket) => {
 
 exports.currentMessages = (socket) => {
   socket.on(GET_CURRENT_MESSAGES, async ({ token, friendName }) => {
-    // get messages
+    const { id } = jwt.verify(token, process.env.JWT_SECRET);
+    const userInfo = await UserModel.findOne({ _id: id });
+    const messages = userInfo.filter(
+      (messageInfo) =>
+        messageInfo.sentTo === friendName || messageInfo.sentFrom === friendName
+    );
     socket.emit(RECEIVE_CURRENT_MESSAGES, messages);
   });
 };
