@@ -8,33 +8,49 @@ const {
   SET_USER_TYPING,
   SET_USER_NOT_TYPING,
 } = require('./types');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 exports.sendMessage = (socket) => {
-  socket.on(SEND_MESSAGE, ({ token, friendName, message }) => {
-    // add message to both the friend and user's model
+  socket.on(SEND_MESSAGE, async ({ token, friendName, message }) => {
+    const { id } = jwt.verify(token, process.env.JWT_SECRET);
+    const userInfo = await UserModel.findOne({ _id: id });
+    const friendInfo = await UserModel.findOne({ username: friendName });
+    const messageInfo = {
+      message,
+      sentTo: friendInfo.username,
+      sentFrom: userInfo.username,
+      time: new Date(),
+    };
+
+    userInfo.messages = [...userInfo.messages, messageInfo];
+    friendInfo.messages = [...friendInfo.messages, messageInfo];
+
+    await userInfo.save();
+    await friendInfo.save();
   });
 };
 
 exports.currentMessages = (socket) => {
-  socket.on(GET_CURRENT_MESSAGES, ({ token, friendName }) => {
+  socket.on(GET_CURRENT_MESSAGES, async ({ token, friendName }) => {
     // get messages
     socket.emit(RECEIVE_CURRENT_MESSAGES, messages);
   });
 };
 
 exports.isFriendTyping = (socket) => {
-  socket.on(GET_IS_FRIEND_TYPING, ({ friendName }) => {
+  socket.on(GET_IS_FRIEND_TYPING, async ({ friendName }) => {
     // get typing status from model
     socket.emit(RECEIVE_IS_FRIEND_TYPING, isFriendTyping);
   });
 };
 
 exports.setUserTyping = (socket) => {
-  socket.on(SET_USER_TYPING, ({ token }) => {
-    // set user typing to true in model
+  socket.on(SET_USER_TYPING, async ({ token }) => {
+    // set user typing to true in model for itself and all friends;
   });
 
-  socket.on(SET_USER_NOT_TYPING, ({ token }) => {
+  socket.on(SET_USER_NOT_TYPING, async ({ token }) => {
     // set user typing to false in model
   });
 };
