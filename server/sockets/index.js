@@ -53,10 +53,16 @@ exports.isFriendTyping = (socket) => {
 
 exports.setUserTyping = (socket) => {
   socket.on(SET_USER_TYPING, async ({ token }) => {
-    // set user typing to true in model for itself and all friends;
+    const { id } = jwt.verify(token, process.env.JWT_SECRET);
+    const userInfo = await UserModel.findOne({ _id: id });
+    userInfo.isTyping = true;
+    await userInfo.save();
   });
 
   socket.on(SET_USER_NOT_TYPING, async ({ token }) => {
-    // set user typing to false in model
+    const { id } = jwt.verify(token, process.env.JWT_SECRET);
+    const userInfo = await UserModel.findOne({ _id: id });
+    userInfo.isTyping = false;
+    await userInfo.save();
   });
 };

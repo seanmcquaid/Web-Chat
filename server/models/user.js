@@ -27,10 +27,6 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
       },
-      isTyping: {
-        type: Boolean,
-        default: false,
-      },
     },
   ],
   messages: [
@@ -56,7 +52,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.methods.addFriend = async function addFriend(name) {
-  this.friends = [...this.friends, { name, isOnline: true, isTyping: false }];
+  this.friends = [...this.friends, { name, isOnline: true }];
   return await this.save();
 };
 
