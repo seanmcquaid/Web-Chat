@@ -27,6 +27,9 @@ exports.postLogin = async (req, res, next) => {
       process.env.JWT_SECRET
     );
 
+    userInfo.isOnline = true;
+    await userInfo.save();
+
     return res.status(200).send({ token, isOnline: userInfo.isOnline });
   } catch (error) {
     return res.status(500).send({
@@ -184,15 +187,23 @@ exports.getAllUsers = async (req, res, next) => {
 };
 
 exports.postLogout = async (req, res, next) => {
-  const { id } = req?.token;
+  try {
+    const { id } = req?.token;
 
-  const userInfo = await UserModel.findOne({ _id: id });
+    const userInfo = await UserModel.findOne({ _id: id });
 
-  userInfo.isOnline = false;
-  userInfo.isTyping = false;
-  req.token = null;
+    userInfo.isOnline = false;
+    userInfo.isTyping = false;
+    req.token = null;
 
-  userInfo.save();
+    await userInfo.save();
 
-  // sketched out solution for now
+    const updatedUserInfo = await UserModel.findOne({ _id: id });
+
+    return res.status(200).send({ ...updatedUserInfo._doc });
+  } catch (error) {
+    return res.status(500).send({
+      errorMessage: 'There was an issue logging out!',
+    });
+  }
 };
