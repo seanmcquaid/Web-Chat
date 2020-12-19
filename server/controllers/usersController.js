@@ -150,13 +150,18 @@ exports.deleteFriend = async (req, res, next) => {
 exports.postMessage = async (req, res, next) => {
   try {
     const { id } = req?.token;
-    const { message, sentTo, sentFrom } = req?.body;
+    const { message, sentTo } = req?.body;
     const time = new Date();
 
     const sendingUserInfo = await UserModel.findOne({ _id: id });
     const receivingUserInfo = await UserModel.findOne({ username: sentTo });
 
-    const messageInfo = { message, sentTo, sentFrom, time };
+    const messageInfo = {
+      message,
+      sentTo,
+      sentFrom: sendingUserInfo.username,
+      time,
+    };
 
     await sendingUserInfo.addMessage(messageInfo);
     await receivingUserInfo.addMessage(messageInfo);

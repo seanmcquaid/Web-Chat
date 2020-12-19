@@ -15,8 +15,7 @@ const Messages = () => {
   useEffect(() => {
     setInterval(() => {
       emitGetCurrentMessages(token, name);
-    }, 3000);
-    console.log('emit');
+    }, 1000);
     return () => {
       socket.disconnect();
     };
@@ -28,7 +27,7 @@ const Messages = () => {
         console.log(data);
         setMessages(data);
       });
-    }, 3000);
+    }, 1000);
     return () => {
       socket.disconnect();
     };

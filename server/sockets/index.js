@@ -65,6 +65,7 @@ exports.isFriendTyping = (socket) => {
 
 exports.setUserTyping = (socket) => {
   socket.on(SET_USER_TYPING, async ({ token }) => {
+    console.log('typing');
     const { id } = jwt.verify(token, process.env.JWT_SECRET);
     const userInfo = await UserModel.findOne({ _id: id });
     userInfo.isTyping = true;
@@ -72,6 +73,7 @@ exports.setUserTyping = (socket) => {
   });
 
   socket.on(SET_USER_NOT_TYPING, async ({ token }) => {
+    console.log('not typing');
     const { id } = jwt.verify(token, process.env.JWT_SECRET);
     const userInfo = await UserModel.findOne({ _id: id });
     userInfo.isTyping = false;

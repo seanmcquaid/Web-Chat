@@ -8,7 +8,6 @@ import { Button, TextInput } from '../../components';
 import socket from '../../sockets';
 import {
   emitIsFriendTyping,
-  emitSendMessage,
   emitSetUserTyping,
   emitUserNoLongerTyping,
 } from '../../sockets/emit';
@@ -26,7 +25,7 @@ const MessageForm = () => {
   useEffect(() => {
     setInterval(() => {
       emitIsFriendTyping(name);
-    }, 3000);
+    }, 1000);
     return () => {
       socket.disconnect();
     };
@@ -37,7 +36,7 @@ const MessageForm = () => {
       socket.on(RECEIVE_IS_FRIEND_TYPING, (data) => {
         setIsFriendTyping(data);
       });
-    }, 3000);
+    }, 1000);
     return () => socket.disconnect();
   }, []);
 
