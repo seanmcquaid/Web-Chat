@@ -13,7 +13,7 @@ require('dotenv').config();
 
 exports.sendMessage = (socket) => {
   socket.on(SEND_MESSAGE, async (resp) => {
-    console.log(resp);
+    const { token, friendName, message } = respo;
     const { id } = jwt.verify(token, process.env.JWT_SECRET);
     const userInfo = await UserModel.findOne({ _id: id });
     const friendInfo = await UserModel.findOne({ username: friendName });
@@ -23,9 +23,6 @@ exports.sendMessage = (socket) => {
       sentFrom: userInfo.username,
       time: new Date(),
     };
-
-    console.log(userInfo);
-    console.log(friendInfo);
 
     userInfo.messages = [...userInfo.messages, messageInfo];
     friendInfo.messages = [...friendInfo.messages, messageInfo];
@@ -50,7 +47,7 @@ exports.currentMessages = (socket) => {
       (messageInfo) =>
         messageInfo.sentTo === friendName || messageInfo.sentFrom === friendName
     );
-    console.log(messages);
+
     socket.emit(RECEIVE_CURRENT_MESSAGES, messages);
   });
 };
