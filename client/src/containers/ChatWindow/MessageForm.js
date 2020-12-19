@@ -10,6 +10,7 @@ import {
   emitIsFriendTyping,
   emitSetUserTyping,
   emitUserNoLongerTyping,
+  emitSendMessage,
 } from '../../sockets/emit';
 import { RECEIVE_IS_FRIEND_TYPING } from '../../sockets/types';
 import { tokenSelector } from '../../store/user/selectors';
@@ -20,15 +21,11 @@ const MessageForm = () => {
   const [isUserTyping, setIsUserTyping] = useState(false);
   const [isFriendTyping, setIsFriendTyping] = useState(false);
   const { name } = useParams();
-  const messageRef = useRef(message);
 
   useEffect(() => {
     setInterval(() => {
       emitIsFriendTyping(name);
     }, 1000);
-    return () => {
-      socket.disconnect();
-    };
   }, [name]);
 
   useEffect(() => {
@@ -37,26 +34,22 @@ const MessageForm = () => {
         setIsFriendTyping(data);
       });
     }, 1000);
-    return () => socket.disconnect();
   }, []);
 
   useEffect(() => {
-    if (message === messageRef.current && !isUserTyping) {
+    if (!isUserTyping) {
       emitUserNoLongerTyping(token);
-      return () => socket.disconnect();
     }
-  }, [message, messageRef, isUserTyping, token]);
+  }, [message, isUserTyping, token]);
 
   const onChange = useCallback(
     (event) => {
       emitSetUserTyping(token);
       setMessage(event.target.value);
       setIsUserTyping(true);
-      messageRef.current = event.target.value;
-      return () => {
-        socket.disconnect();
+      {
         setIsUserTyping(false);
-      };
+      }
     },
     [token]
   );
@@ -64,22 +57,7 @@ const MessageForm = () => {
   const onSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      const messageInfo = {
-        message,
-        sentTo: name,
-      };
-      const cancelToken = Axios.CancelToken;
-      const source = cancelToken.source();
-      const config = {
-        cancelToken: source.token,
-        headers: {
-          Authorization: token,
-        },
-      };
-      sendMessage(messageInfo, config).then(({ data }) => {
-        console.log(data);
-        source.cancel();
-      });
+      emitSendMessage({ token, friendName: name, message });
       setMessage('');
     },
     [token, name, message]
