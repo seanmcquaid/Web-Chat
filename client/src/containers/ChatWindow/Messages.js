@@ -24,7 +24,6 @@ const Messages = () => {
   useEffect(() => {
     setInterval(() => {
       socket.on(RECEIVE_CURRENT_MESSAGES, (data) => {
-        console.log(data);
         setMessages(data);
       });
     }, 1000);
@@ -36,13 +35,25 @@ const Messages = () => {
   return (
     <MessagesList>
       {messages.map((message, i) => (
-        <Message key={i}>{message.message}</Message>
+        <Message key={i} left={name === message.sentTo}>
+          {message.message}
+        </Message>
       ))}
     </MessagesList>
   );
 };
 
-const MessagesList = styled.ol``;
-const Message = styled.li``;
+const MessagesList = styled.ol`
+  list-styled: none;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Message = styled.li`
+  display: flex;
+  justify-content: {props => props.left ? 'left' : 'right'};
+  align-items: center;
+  background-color: {props => props.left ? 'green' : 'blue'};
+`;
 
 export default Messages;

@@ -1,9 +1,7 @@
-import Axios from 'axios';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { sendMessage } from '../../api/userService';
 import { Button, TextInput } from '../../components';
 import socket from '../../sockets';
 import {
@@ -34,22 +32,25 @@ const MessageForm = () => {
         setIsFriendTyping(data);
       });
     }, 1000);
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   useEffect(() => {
     if (!isUserTyping) {
       emitUserNoLongerTyping(token);
     }
-  }, [message, isUserTyping, token]);
+  }, [isUserTyping, token]);
 
   const onChange = useCallback(
     (event) => {
       emitSetUserTyping(token);
       setMessage(event.target.value);
       setIsUserTyping(true);
-      {
+      return () => {
         setIsUserTyping(false);
-      }
+      };
     },
     [token]
   );
