@@ -8,25 +8,31 @@ import { RECEIVE_CURRENT_MESSAGES } from '../../sockets/types';
 import { tokenSelector } from '../../store/user/selectors';
 
 const Messages = () => {
-  const [messages, setMessages] = useState();
+  const [messages, setMessages] = useState([]);
   const { name } = useParams();
   const token = useSelector(tokenSelector);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setInterval(() => {
       emitGetCurrentMessages(token, name);
     }, 3000);
     return () => {
-      clearTimeout(timer);
+      clearInterval(timer);
       socket.disconnect();
     };
   }, [name, token]);
 
   useEffect(() => {
-    socket.on(RECEIVE_CURRENT_MESSAGES, (data) => {
-      setMessages(data);
-    });
-    return () => socket.disconnect();
+    const timer = setInterval(() => {
+      socket.on(RECEIVE_CURRENT_MESSAGES, (data) => {
+        console.log(data);
+        setMessages(data);
+      });
+    }, 3000);
+    return () => {
+      clearInterval(timer);
+      socket.disconnect();
+    };
   }, []);
 
   return (
