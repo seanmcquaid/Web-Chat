@@ -4,6 +4,7 @@ import TextInput from './TextInput';
 import LoadingSpinner from './LoadingSpinner';
 import LinkButton from './LinkButton';
 import ErrorMessage from './ErrorMessage';
+import Navbar from './Navbar';
 
 export {
   H1,
@@ -14,4 +15,5 @@ export {
   LoadingSpinner,
   LinkButton,
   ErrorMessage,
+  Navbar,
 };

@@ -1,15 +1,20 @@
+import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
+import { isLoadingSelector } from '../store/loading/selectors';
+import { tokenSelector } from '../store/user/selectors';
+import { LoadingSpinner } from '../components';
 
 const ProtectedRoute = (props) => {
-  // this is a place holder until I implement redux
+  const isLoading = useSelector(isLoadingSelector);
+  const token = useSelector(tokenSelector);
 
-  // if (props.isLoading) {
-  //   return <div>Loading</div>;
-  // }
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
-  // if (!props.isAuthenticated) {
-  //   return <Redirect to='/' />;
-  // }
+  if (!token) {
+    return <Redirect to='/' />;
+  }
 
   return <Route {...props} />;
 };
