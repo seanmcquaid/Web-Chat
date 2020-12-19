@@ -13,24 +13,23 @@ const Messages = () => {
   const token = useSelector(tokenSelector);
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    setInterval(() => {
       emitGetCurrentMessages(token, name);
     }, 3000);
+    console.log('emit');
     return () => {
-      clearInterval(timer);
       socket.disconnect();
     };
   }, [name, token]);
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    setInterval(() => {
       socket.on(RECEIVE_CURRENT_MESSAGES, (data) => {
         console.log(data);
         setMessages(data);
       });
     }, 3000);
     return () => {
-      clearInterval(timer);
       socket.disconnect();
     };
   }, []);

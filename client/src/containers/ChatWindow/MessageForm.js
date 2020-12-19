@@ -1,7 +1,9 @@
+import Axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { sendMessage } from '../../api/userService';
 import { Button, TextInput } from '../../components';
 import socket from '../../sockets';
 import {
@@ -22,19 +24,20 @@ const MessageForm = () => {
   const messageRef = useRef(message);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    setInterval(() => {
       emitIsFriendTyping(name);
     }, 3000);
     return () => {
-      clearTimeout(timer);
       socket.disconnect();
     };
   }, [name]);
 
   useEffect(() => {
-    socket.on(RECEIVE_IS_FRIEND_TYPING, (data) => {
-      setIsFriendTyping(data);
-    });
+    setInterval(() => {
+      socket.on(RECEIVE_IS_FRIEND_TYPING, (data) => {
+        setIsFriendTyping(data);
+      });
+    }, 3000);
     return () => socket.disconnect();
   }, []);
 
@@ -62,15 +65,23 @@ const MessageForm = () => {
   const onSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      emitSendMessage({
-        token,
-        friendName: name,
+      const messageInfo = {
         message,
+        sentTo: name,
+      };
+      const cancelToken = Axios.CancelToken;
+      const source = cancelToken.source();
+      const config = {
+        cancelToken: source.token,
+        headers: {
+          Authorization: token,
+        },
+      };
+      sendMessage(messageInfo, config).then(({ data }) => {
+        console.log(data);
+        source.cancel();
       });
       setMessage('');
-      return () => {
-        socket.disconnect();
-      };
     },
     [token, name, message]
   );

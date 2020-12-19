@@ -14,3 +14,6 @@ export const addFriend = (name, config) =>
 
 export const getUserInfo = (config) =>
   apiClient.get('/users/getUserInfo', config);
+
+export const sendMessage = (messageInfo, config) =>
+  apiClient.post('/users/sendMessage', { ...messageInfo }, config);
