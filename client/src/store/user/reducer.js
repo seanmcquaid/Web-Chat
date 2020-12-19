@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, REGISTER_SUCCESS } from './types';
+import { LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_SUCCESS } from './types';
 
 const initialState = {
   token: null,
@@ -11,7 +11,10 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         token: action?.userInfo?.token,
-        isOnline: action?.userInfo?.isOnline,
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        ...initialState,
       };
     default:
       return { ...state };

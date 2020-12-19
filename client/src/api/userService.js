@@ -17,3 +17,7 @@ export const getUserInfo = (config) =>
 
 export const sendMessage = (messageInfo, config) =>
   apiClient.post('/users/sendMessage', { ...messageInfo }, config);
+
+export const logout = (config) => {
+  apiClient.post('/users/logout', {}, config);
+};
