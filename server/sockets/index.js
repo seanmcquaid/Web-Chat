@@ -13,7 +13,7 @@ require('dotenv').config();
 
 exports.sendMessage = (socket) => {
   socket.on(SEND_MESSAGE, async (resp) => {
-    const { token, friendName, message } = respo;
+    const { token, friendName, message } = resp;
     const { id } = jwt.verify(token, process.env.JWT_SECRET);
     const userInfo = await UserModel.findOne({ _id: id });
     const friendInfo = await UserModel.findOne({ username: friendName });
