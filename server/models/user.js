@@ -56,17 +56,17 @@ UserSchema.methods.addFriend = async function addFriend(name, isOnline) {
   return await this.save();
 };
 
-UserSchema.methods.deleteFriend = function deleteFriend(name) {
+UserSchema.methods.deleteFriend = async function deleteFriend(name) {
   this.friends = this.friends.filter((friend) => friend.name !== name);
   return await this.save();
 };
 
-UserSchema.methods.addMessage = function addMessage(message) {
+UserSchema.methods.addMessage = async function addMessage(message) {
   this.messages = [...this.messages, message];
   return await this.save();
 };
 
-UserSchema.methods.hasFriend = function hasFriend(name) {
+UserSchema.methods.hasFriend = async function hasFriend(name) {
   for (let i = 0; i < this.friends.length; i++) {
     const friend = this.friends[i];
     if (friend.name === name) {

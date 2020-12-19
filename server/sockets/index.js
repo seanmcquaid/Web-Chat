@@ -12,7 +12,8 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 exports.sendMessage = (socket) => {
-  socket.on(SEND_MESSAGE, async ({ token, friendName, message }) => {
+  socket.on(SEND_MESSAGE, async (resp) => {
+    console.log(resp);
     const { id } = jwt.verify(token, process.env.JWT_SECRET);
     const userInfo = await UserModel.findOne({ _id: id });
     const friendInfo = await UserModel.findOne({ username: friendName });
@@ -23,6 +24,9 @@ exports.sendMessage = (socket) => {
       time: new Date(),
     };
 
+    console.log(userInfo);
+    console.log(friendInfo);
+
     userInfo.messages = [...userInfo.messages, messageInfo];
     friendInfo.messages = [...friendInfo.messages, messageInfo];
 
@@ -32,13 +36,21 @@ exports.sendMessage = (socket) => {
 };
 
 exports.currentMessages = (socket) => {
-  socket.on(GET_CURRENT_MESSAGES, async ({ token, friendName }) => {
+  socket.on(GET_CURRENT_MESSAGES, async (resp) => {
+    console.log(resp);
+    const { token, friendName } = resp;
+
+    if (!token) {
+      return [];
+    }
+
     const { id } = jwt.verify(token, process.env.JWT_SECRET);
     const userInfo = await UserModel.findOne({ _id: id });
-    const messages = userInfo.filter(
+    const messages = userInfo.messages.filter(
       (messageInfo) =>
         messageInfo.sentTo === friendName || messageInfo.sentFrom === friendName
     );
+    console.log(messages);
     socket.emit(RECEIVE_CURRENT_MESSAGES, messages);
   });
 };
