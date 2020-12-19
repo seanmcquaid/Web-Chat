@@ -10,6 +10,7 @@ router
   .delete('/friends/:name', checkAuth, usersController.deleteFriend)
   .post('/addFriend', checkAuth, usersController.postFriend)
   .post('/sendMessage', checkAuth, usersController.postMessage)
-  .get('/getAllUsers', checkAuth, usersController.getAllUsers);
+  .get('/getAllUsers', checkAuth, usersController.getAllUsers)
+  .post('/logout', checkAuth, usersController.postLogout);
 
 module.exports = router;
