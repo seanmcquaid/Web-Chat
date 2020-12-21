@@ -16,9 +16,6 @@ const Messages = () => {
     setInterval(() => {
       emitGetCurrentMessages(token, name);
     }, 1000);
-    return () => {
-      socket.disconnect();
-    };
   }, [name, token]);
 
   useEffect(() => {
@@ -36,7 +33,7 @@ const Messages = () => {
     <MessagesList>
       {messages.map((message, i) => (
         <Message key={i} left={name === message.sentTo}>
-          {message.message}
+          {message.sentFrom} : {message.message}
         </Message>
       ))}
     </MessagesList>
@@ -47,13 +44,20 @@ const MessagesList = styled.ol`
   list-styled: none;
   display: flex;
   flex-direction: column;
+  padding: 0;
+  margin: 0 0.25rem;
 `;
 
 const Message = styled.li`
+  width: 100%;
   display: flex;
-  justify-content: {props => props.left ? 'left' : 'right'};
+  justify-content: ${(props) => (props.left ? 'left' : 'right')};
   align-items: center;
-  background-color: {props => props.left ? 'green' : 'blue'};
+  margin: 0.25rem 0;
+  padding: 0.25rem;
+  background-color: ${(props) => (props.left ? '#153243' : '#F4F9E9')};
+  color: ${(props) => (props.left ? 'white' : 'black')};
+  font-family: 'PT Serif', serif;
 `;
 
 export default Messages;

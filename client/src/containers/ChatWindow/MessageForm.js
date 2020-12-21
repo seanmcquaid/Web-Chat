@@ -80,7 +80,12 @@ const MessageForm = () => {
   );
 };
 
-const Form = styled.form``;
+const Form = styled.form`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
 
 const FriendTypingText = styled.span``;
 
