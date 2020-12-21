@@ -17,9 +17,19 @@ const TextInput = memo(
   )
 );
 
-const Label = styled.label``;
+const Label = styled.label`
+  font-family: 'PT Serif', serif;
+  margin: 0.5rem;
+`;
 
-const StyledTextInput = styled.input``;
+const StyledTextInput = styled.input`
+  padding: 0.25rem;
+  margin: 0.25rem;
+  border-radius: 8px;
+  border: none;
+  font-family: 'PT Serif', serif;
+  outline: none;
+`;
 
 TextInput.propTypes = {
   type: PropTypes.string.isRequired,

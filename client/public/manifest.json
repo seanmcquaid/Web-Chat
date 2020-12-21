@@ -1,6 +1,5 @@
 {
   "short_name": "Web Chat",
   "name": "Web Chat",
-  "start_url": ".",
   "display": "standalone"
 }
