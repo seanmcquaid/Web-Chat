@@ -28,7 +28,11 @@ const Navbar = () => {
     </>
   );
 
-  return <StyledNav>{navLinks}</StyledNav>;
+  return (
+    <StyledNav>
+      <NavList>{navLinks}</NavList>
+    </StyledNav>
+  );
 };
 
 const StyledNav = styled.nav`
@@ -38,6 +42,15 @@ const StyledNav = styled.nav`
   justify-content: left;
   align-items: center;
   background-color: #153243;
+`;
+
+const NavList = styled.ul`
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
 `;
 
 const NavLink = styled(Link)`
@@ -53,7 +66,6 @@ const NavLink = styled(Link)`
 `;
 
 const LogoutButton = styled.button`
-  width: 100%;
   text-align: center;
   background-color: #153243;
   padding: 1rem;

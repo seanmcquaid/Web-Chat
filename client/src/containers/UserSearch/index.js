@@ -86,7 +86,7 @@ const UserSearch = () => {
         <H1>User Search</H1>
         <ErrorMessage />
       </Header>
-      <MainContent>
+      <Main>
         <TextInput
           onChange={onChange}
           value={inputText}
@@ -95,15 +95,31 @@ const UserSearch = () => {
           placeholder='Search for a user here!'
         />
         <UserList users={searchedUsers} />
-      </MainContent>
+      </Main>
     </PageContainer>
   );
 };
 
-const PageContainer = styled.div``;
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+`;
 
-const Header = styled.header``;
+const Header = styled.header`
+  height: 20%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-const MainContent = styled.main``;
+const Main = styled.main`
+  height: 80%;
+  width: 100%;
+`;
 
 export default UserSearch;

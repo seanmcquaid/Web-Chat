@@ -72,13 +72,38 @@ const UserList = memo(({ users }) => {
   );
 });
 
-const StyledUserList = styled.ul``;
+const StyledUserList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
-const User = styled.li``;
+const User = styled.li`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  width: 100%;
+  max-width: 16rem;
+  margin: 0.5rem;
+  font-family: 'PT Serif', serif;
+`;
 
-const ListFooter = styled.div``;
+const ListFooter = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
 
-const PageText = styled.span``;
+const PageText = styled.span`
+  font-family: 'PT Serif', serif;
+`;
 
 UserList.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
