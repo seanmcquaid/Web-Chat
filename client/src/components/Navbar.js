@@ -43,6 +43,7 @@ const StyledNav = styled.nav`
 const NavLink = styled(Link)`
   padding: 1rem;
   margin: 0;
+  font-size: 1rem;
   font-family: 'PT Serif', serif;
   text-decoration: none;
   color: white;
@@ -51,6 +52,16 @@ const NavLink = styled(Link)`
   }
 `;
 
-const LogoutButton = styled.button``;
+const LogoutButton = styled.button`
+  width: 100%;
+  text-align: center;
+  background-color: #153243;
+  padding: 1rem;
+  margin: 0;
+  font-size: 1rem;
+  font-family: 'PT Serif', serif;
+  color: white;
+  border: none;
+`;
 
 export default Navbar;
