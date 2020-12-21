@@ -15,6 +15,14 @@ Button.propTypes = {
   disabled: PropTypes.bool,
 };
 
-const StyledButton = styled.button``;
+const StyledButton = styled.button`
+  font-family: 'Poppins', sans-serif;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: none;
+  margin: 0.75rem;
+  background-color: #eef0eb;
+  color: black;
+`;
 
 export default Button;
