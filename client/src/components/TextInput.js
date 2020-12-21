@@ -20,6 +20,10 @@ const TextInput = memo(
 const Label = styled.label`
   font-family: 'PT Serif', serif;
   margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledTextInput = styled.input`
