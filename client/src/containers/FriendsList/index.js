@@ -18,17 +18,32 @@ const FriendsList = () => {
         <H1>Friends List</H1>
         <ErrorMessage />
       </Header>
-      <MainContent>
+      <Main>
         <Friends />
-      </MainContent>
+      </Main>
     </PageContainer>
   );
 };
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+`;
 
-const PageContainer = styled.div``;
+const Header = styled.header`
+  height: 20%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-const Header = styled.header``;
-
-const MainContent = styled.main``;
+const Main = styled.main`
+  height: 80%;
+  width: 100%;
+`;
 
 export default FriendsList;

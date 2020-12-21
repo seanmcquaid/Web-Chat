@@ -20,9 +20,27 @@ const Friends = memo(() => {
   );
 });
 
-const StyledFriends = styled.ul``;
+const StyledFriends = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
-const Friend = styled.li``;
+const Friend = styled.li`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  width: 100%;
+  max-width: 16rem;
+  margin: 0.5rem;
+  font-family: 'PT Serif', serif;
+`;
 
 const FriendName = styled.span``;
 
