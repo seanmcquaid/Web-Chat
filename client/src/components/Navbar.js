@@ -31,9 +31,25 @@ const Navbar = () => {
   return <StyledNav>{navLinks}</StyledNav>;
 };
 
-const StyledNav = styled.nav``;
+const StyledNav = styled.nav`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  background-color: #153243;
+`;
 
-const NavLink = styled(Link)``;
+const NavLink = styled(Link)`
+  padding: 1rem;
+  margin: 0;
+  font-family: 'PT Serif', serif;
+  text-decoration: none;
+  color: white;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 const LogoutButton = styled.button``;
 
