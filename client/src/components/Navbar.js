@@ -13,7 +13,7 @@ const Navbar = () => {
     dispatch(logoutAction());
   }, [dispatch]);
 
-  const navLinks = token ? (
+  const navLinks = !token ? (
     <>
       <NavLink to='/'>Home</NavLink>
       <NavLink to='/login'>Login</NavLink>

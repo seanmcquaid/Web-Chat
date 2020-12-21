@@ -1,4 +1,4 @@
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import {
   Home,
   Login,
@@ -11,7 +11,7 @@ import {
 import ProtectedRoute from './ProtectedRoute';
 
 const Routes = () => (
-  <BrowserRouter>
+  <>
     <Route exact path='/' component={Home} />
     <Route exact path='/login' component={Login} />
     <Route exact path='/register' component={Register} />
@@ -19,7 +19,7 @@ const Routes = () => (
     <ProtectedRoute exact path='/friendsList' component={FriendsList} />
     <ProtectedRoute exact path='/userSearch' component={UserSearch} />
     <ProtectedRoute exact path='/chatWindow/:name' component={ChatWindow} />
-  </BrowserRouter>
+  </>
 );
 
 export default Routes;
