@@ -1,7 +1,10 @@
 import { memo } from 'react';
 import { ClimbingBoxLoader } from 'react-spinners';
-import styled from 'styled-components';
 
-const LoadingSpinner = memo(styled(ClimbingBoxLoader)``);
+const LoadingSpinner = memo(() => (
+  <div data-testid='loadingSpinner'>
+    <ClimbingBoxLoader />
+  </div>
+));
 
 export default LoadingSpinner;
