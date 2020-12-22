@@ -32,7 +32,6 @@ const reducer = (state = initialState, action) => {
     case LOGOUT_LOADING:
     case GET_USER_INFO_LOADING:
       return {
-        ...state,
         isLoading: true,
       };
     case LOGIN_ERROR:
@@ -40,13 +39,15 @@ const reducer = (state = initialState, action) => {
     case ADD_FRIEND_ERROR:
     case GET_USER_INFO_ERROR:
     case LOGOUT_ERROR:
+      return {
+        isLoading: false,
+      };
     case ADD_FRIEND_SUCCESS:
     case GET_USER_INFO_SUCCESS:
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
     case LOGOUT_SUCCESS:
       return {
-        ...state,
         isLoading: false,
       };
     default:
