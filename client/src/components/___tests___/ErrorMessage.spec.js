@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureStore from '../../store';
+import { BrowserRouter } from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage';
 
 describe('<ErrorMessage/>', () => {
@@ -23,7 +24,9 @@ describe('<ErrorMessage/>', () => {
 
     render(
       <Provider store={store}>
-        <ErrorMessage />
+        <BrowserRouter>
+          <ErrorMessage />
+        </BrowserRouter>
       </Provider>
     );
 
