@@ -3,7 +3,7 @@ const mockResponse = require('../../testUtils.js/mockResponse');
 const mockNext = require('../../testUtils.js/mockNext');
 const usersController = require('../usersController');
 const UserModel = require('../../models/user');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 describe('usersController', () => {
@@ -78,6 +78,8 @@ describe('usersController', () => {
       jest.spyOn(bcrypt, 'compare').mockImplementationOnce(() => true);
 
       jest.spyOn(jwt, 'sign').mockImplementationOnce(() => 'Valid Token');
+
+      jest.spyOn(UserModel, 'save').mockImplementationOnce(() => userInfo);
 
       await usersController.postLogin(req, res, next);
 
@@ -170,13 +172,15 @@ describe('usersController', () => {
     const next = mockNext();
 
     const userInfo = {
-      _id: 1,
-      username: 'testUser',
-      password: 'testPassword',
-      isTyping: false,
-      isOnline: true,
-      friends: [],
-      messages: [],
+      _doc: {
+        _id: 1,
+        username: 'testUser',
+        password: 'testPassword',
+        isTyping: false,
+        isOnline: true,
+        friends: [],
+        messages: [],
+      },
     };
 
     jest.spyOn(UserModel, 'findOne').mockImplementationOnce(() => userInfo);
@@ -185,7 +189,13 @@ describe('usersController', () => {
 
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalledWith({
-      ...userInfo,
+      _id: 1,
+      username: 'testUser',
+      password: 'testPassword',
+      isTyping: false,
+      isOnline: true,
+      friends: [],
+      messages: [],
     });
   });
 
@@ -517,6 +527,62 @@ describe('usersController', () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalledWith({
       users,
+    });
+  });
+
+  it('postLogout', async () => {
+    const token = {
+      id: 1,
+    };
+    const req = mockRequest({}, {}, {}, token);
+
+    const userInfo = {
+      _id: 1,
+      username: 'testUser',
+      password: 'testPassword',
+      isTyping: false,
+      isOnline: true,
+      friends: [
+        {
+          name: 'New Friend Name',
+          isOnline: true,
+          isTyping: false,
+        },
+      ],
+      messages: [],
+    };
+
+    jest.spyOn(UserModel, 'findOne').mockImplementationOnce(() => userInfo);
+
+    jest.spyOn(UserModel, 'save').mockImplementationOnce(() => userInfo);
+
+    const updatedUserInfo = {
+      _doc: {
+        _id: 1,
+        username: 'testUser',
+        password: 'testPassword',
+        isTyping: false,
+        isOnline: false,
+        friends: [
+          {
+            name: 'New Friend Name',
+            isOnline: true,
+            isTyping: false,
+          },
+        ],
+        messages: [],
+      },
+    };
+
+    jest
+      .spyOn(UserModel, 'findOne')
+      .mockImplementationOnce(() => updatedUserInfo);
+
+    await usersController.postLogout(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({
+      ...updatedUserInfo._doc,
     });
   });
 });
