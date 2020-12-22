@@ -1,5 +1,20 @@
 import {
+  ADD_FRIEND_ERROR,
+  GET_USER_INFO_ERROR,
+  LOGIN_ERROR,
+  LOGOUT_ERROR,
+  REGISTER_ERROR,
+} from '../error/types';
+import { ADD_FRIEND_SUCCESS } from '../friends/types';
+import {
+  GET_USER_INFO_SUCCESS,
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  REGISTER_SUCCESS,
+} from '../user/types';
+import {
   ADD_FRIEND_LOADING,
+  GET_USER_INFO_LOADING,
   LOGIN_LOADING,
   LOGOUT_LOADING,
   REGISTER_LOADING,
@@ -15,13 +30,28 @@ const reducer = (state = initialState, action) => {
     case REGISTER_LOADING:
     case ADD_FRIEND_LOADING:
     case LOGOUT_LOADING:
+    case GET_USER_INFO_LOADING:
       return {
         ...state,
         isLoading: true,
       };
+    case LOGIN_ERROR:
+    case REGISTER_ERROR:
+    case ADD_FRIEND_ERROR:
+    case GET_USER_INFO_ERROR:
+    case LOGOUT_ERROR:
+    case ADD_FRIEND_SUCCESS:
+    case GET_USER_INFO_SUCCESS:
+    case REGISTER_SUCCESS:
+    case LOGIN_SUCCESS:
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+      };
     default:
       return {
-        ...initialState,
+        ...state,
       };
   }
 };
