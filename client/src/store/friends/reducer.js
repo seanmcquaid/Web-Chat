@@ -18,7 +18,7 @@ const reducer = (state = initialState, action) => {
         friendsList: [...action?.userInfo?.friends],
       };
     default:
-      return state;
+      return { ...state };
   }
 };
 

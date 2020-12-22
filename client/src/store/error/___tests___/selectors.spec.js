@@ -2,7 +2,7 @@ import { errorMessageSelector } from '../selectors';
 
 describe('errorSelectors', () => {
   describe('errorMessageSelector', () => {
-    it('No error state provided', () => {
+    it('No error message state provided', () => {
       const state = {
         error: {},
       };
