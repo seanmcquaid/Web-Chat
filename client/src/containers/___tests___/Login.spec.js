@@ -1,1 +1,1 @@
-describe('Name of the group', () => {});
+describe('<Login/>', () => {});
