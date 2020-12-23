@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import { memo, useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '../../components';
 import { addFriendAction } from '../../store/friends/actions';
 
 const UserList = memo(({ users }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const totalPages = Math.ceil(users.length / 5);
   const [currentPage, setCurrentPage] = useState(0);
@@ -13,13 +15,14 @@ const UserList = memo(({ users }) => {
     () => users.slice(currentPage * 5, (currentPage + 1) * 5),
     [users, currentPage]
   );
-  console.log(displayedUsers, currentPage);
 
   const addFriendButtonOnClick = useCallback(
     (name) => {
-      dispatch(addFriendAction(name));
+      dispatch(addFriendAction(name)).then(() => {
+        history.push('/friendsList');
+      });
     },
-    [dispatch]
+    [dispatch, history]
   );
 
   const decrementPageButtonOnClick = useCallback(() => {

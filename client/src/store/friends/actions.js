@@ -25,11 +25,13 @@ export const addFriendAction = (name) => (dispatch, getState) => {
         type: ADD_FRIEND_SUCCESS,
         friends: data?.friends,
       });
+      return Promise.resolve();
     })
     .catch((err) => {
       dispatch({
         type: ADD_FRIEND_ERROR,
         error: err,
       });
+      return Promise.reject();
     });
 };
