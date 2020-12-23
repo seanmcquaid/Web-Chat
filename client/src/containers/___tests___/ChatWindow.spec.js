@@ -1,5 +1,5 @@
 describe('<ChatWindow/>', () => {
-  describe('<Messages/>', () => {});
+  it('Friend is typing displays', () => {});
 
-  describe('<MessageForm/>', () => {});
+  it('Sent message displays', () => {});
 });

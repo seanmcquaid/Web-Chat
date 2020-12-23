@@ -49,7 +49,9 @@ const MessageForm = () => {
       setMessage(event.target.value);
       setIsUserTyping(true);
       return () => {
-        setIsUserTyping(false);
+        setInterval(() => {
+          setIsUserTyping(false);
+        }, 3000);
       };
     },
     [token]
