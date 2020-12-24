@@ -100,14 +100,13 @@ export const getUserInfoAction = () => (dispatch, getState) => {
         type: GET_USER_INFO_SUCCESS,
         userInfo: data,
       });
+      source.cancel();
     })
     .catch((err) => {
       dispatch({
         type: GET_USER_INFO_ERROR,
         error: err,
       });
-    })
-    .finally(() => {
       source.cancel();
     });
 };

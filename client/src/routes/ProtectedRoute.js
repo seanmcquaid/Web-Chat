@@ -8,10 +8,6 @@ const ProtectedRoute = (props) => {
   const isLoading = useSelector(isLoadingSelector);
   const token = useSelector(tokenSelector);
 
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
-
   if (!token) {
     return <Redirect to='/' />;
   }
