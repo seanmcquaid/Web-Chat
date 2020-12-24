@@ -61,16 +61,16 @@ const UserSearch = () => {
         includeScore: true,
       };
 
+      const value = event.target.value;
+
       const fuse = new Fuse(originalUsers, options);
-      const results = fuse.search(event.target.value);
+      const results = fuse.search(value);
 
       setState((prevState) => ({
         ...prevState,
-        [event.target.name]: event.target.value,
+        [event.target.name]: value,
         searchedUsers:
-          event.target.value.length > 0
-            ? results.map(({ item }) => item)
-            : originalUsers,
+          value.length > 0 ? results.map(({ item }) => item) : originalUsers,
       }));
     },
     [originalUsers]

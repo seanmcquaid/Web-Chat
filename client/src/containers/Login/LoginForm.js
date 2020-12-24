@@ -14,9 +14,10 @@ const LoginForm = () => {
   });
 
   const onChange = useCallback((event) => {
+    const value = event.target.value;
     setInputText((state) => ({
       ...state,
-      [event.target.name]: event.target.value,
+      [event.target.name]: value,
     }));
   }, []);
 
