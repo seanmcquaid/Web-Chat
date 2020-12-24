@@ -107,7 +107,7 @@ exports.postFriend = async (req, res, next) => {
 
     const friendInfo = await UserModel.findOne({ username: name });
 
-    await userInfo.addFriend(friendInfo.name, friendInfo.isOnline);
+    await userInfo.addFriend(friendInfo.username, friendInfo.isOnline);
 
     const updatedUserInfo = await UserModel.findOne({ _id: id });
     return res.status(200).send({ ...updatedUserInfo._doc });
