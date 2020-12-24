@@ -158,9 +158,82 @@ describe('<UserSearch/>', () => {
   });
 
   describe('<UserList/>', () => {
-    it('Only 5 users displays', () => {});
+    it('Only 5 users displays', async () => {
+      const initialState = {
+        user: {
+          token: 'valid token',
+        },
+      };
+      const { store } = configureStore(initialState);
 
-    it('Adding friend redirects user to friendsList', () => {});
+      jest.spyOn(userService, 'getAllUsers').mockResolvedValue({
+        data: {
+          users: [
+            { username: 'hello.there', _id: 1 },
+            { username: 'hello.there', _id: 2 },
+            { username: 'hello.there', _id: 3 },
+            { username: 'hello.there', _id: 4 },
+            { username: 'hello.there', _id: 5 },
+            { username: 'hello.there', _id: 6 },
+          ],
+        },
+      });
+
+      render(
+        <Provider store={store}>
+          <MockRouter initialRoute='/userSearch'>
+            <Switch>
+              <ProtectedRoute exact path='/userSearch' component={UserSearch} />
+              <ProtectedRoute
+                exact
+                path='/friendsList'
+                component={FriendsList}
+              />
+            </Switch>
+          </MockRouter>
+        </Provider>
+      );
+
+      await waitFor(() =>
+        expect(screen.queryByTestId('loadingSpinner')).toBeNull()
+      );
+
+      expect(screen.queryAllByText('hello.there').length).toEqual(5);
+    });
+
+    it('Adding friend redirects user to friendsList', async () => {
+      const initialState = {
+        user: {
+          token: 'valid token',
+        },
+      };
+      const { store } = configureStore(initialState);
+
+      jest.spyOn(userService, 'getAllUsers').mockResolvedValue({
+        data: {
+          users: [{ username: 'hello.there', _id: 1 }],
+        },
+      });
+
+      render(
+        <Provider store={store}>
+          <MockRouter initialRoute='/userSearch'>
+            <Switch>
+              <ProtectedRoute exact path='/userSearch' component={UserSearch} />
+              <ProtectedRoute
+                exact
+                path='/friendsList'
+                component={FriendsList}
+              />
+            </Switch>
+          </MockRouter>
+        </Provider>
+      );
+
+      await waitFor(() =>
+        expect(screen.queryByTestId('loadingSpinner')).toBeNull()
+      );
+    });
 
     it('Decrement Page Button on click', () => {});
 
