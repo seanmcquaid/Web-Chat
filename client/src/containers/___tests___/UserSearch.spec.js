@@ -233,16 +233,246 @@ describe('<UserSearch/>', () => {
       await waitFor(() =>
         expect(screen.queryByTestId('loadingSpinner')).toBeNull()
       );
+
+      jest.spyOn(userService, 'addFriend').mockResolvedValue({
+        data: {
+          friends: [{ name: 'hello.there', _id: '1', isOnline: true }],
+        },
+      });
+
+      jest.spyOn(userService, 'getUserInfo').mockResolvedValue({
+        data: {
+          friends: [{ name: 'hello.there', _id: '1', isOnline: true }],
+        },
+      });
+
+      fireEvent.click(screen.getByText('Add Friend'));
+
+      await waitFor(() =>
+        expect(screen.queryByTestId('loadingSpinner')).toBeNull()
+      );
+
+      expect(screen.getByText('Friends List')).toBeInTheDocument();
+      expect(screen.getByText('hello.there')).toBeInTheDocument();
     });
 
-    it('Decrement Page Button on click', () => {});
+    it('Decrement Page Button on click', async () => {
+      const initialState = {
+        user: {
+          token: 'valid token',
+        },
+      };
+      const { store } = configureStore(initialState);
 
-    it('Increment Page Button on click', () => {});
+      jest.spyOn(userService, 'getAllUsers').mockResolvedValue({
+        data: {
+          users: [
+            { username: 'hello.there', _id: 1 },
+            { username: 'hello.there', _id: 2 },
+            { username: 'hello.there', _id: 3 },
+            { username: 'hello.there', _id: 4 },
+            { username: 'hello.there', _id: 5 },
+            { username: 'hello.there', _id: 6 },
+          ],
+        },
+      });
 
-    it('No users found', () => {});
+      render(
+        <Provider store={store}>
+          <MockRouter initialRoute='/userSearch'>
+            <Switch>
+              <ProtectedRoute exact path='/userSearch' component={UserSearch} />
+              <ProtectedRoute
+                exact
+                path='/friendsList'
+                component={FriendsList}
+              />
+            </Switch>
+          </MockRouter>
+        </Provider>
+      );
 
-    it('Decrement button disabled', () => {});
+      await waitFor(() =>
+        expect(screen.queryByTestId('loadingSpinner')).toBeNull()
+      );
 
-    it('Increment button disabled', () => {});
+      expect(screen.getByText('1 of 2')).toBeInTheDocument();
+
+      fireEvent.click('Next Page');
+
+      expect(screen.getByText('2 of 2')).toBeInTheDocument();
+
+      fireEvent.click('Prev Page');
+
+      expect(screen.getByText('1 of 2')).toBeInTheDocument();
+    });
+
+    it('Increment Page Button on click', async () => {
+      const initialState = {
+        user: {
+          token: 'valid token',
+        },
+      };
+      const { store } = configureStore(initialState);
+
+      jest.spyOn(userService, 'getAllUsers').mockResolvedValue({
+        data: {
+          users: [
+            { username: 'hello.there', _id: 1 },
+            { username: 'hello.there', _id: 2 },
+            { username: 'hello.there', _id: 3 },
+            { username: 'hello.there', _id: 4 },
+            { username: 'hello.there', _id: 5 },
+            { username: 'hello.there', _id: 6 },
+          ],
+        },
+      });
+
+      render(
+        <Provider store={store}>
+          <MockRouter initialRoute='/userSearch'>
+            <Switch>
+              <ProtectedRoute exact path='/userSearch' component={UserSearch} />
+              <ProtectedRoute
+                exact
+                path='/friendsList'
+                component={FriendsList}
+              />
+            </Switch>
+          </MockRouter>
+        </Provider>
+      );
+
+      await waitFor(() =>
+        expect(screen.queryByTestId('loadingSpinner')).toBeNull()
+      );
+
+      expect(screen.getByText('1 of 2')).toBeInTheDocument();
+
+      fireEvent.click('Next Page');
+
+      expect(screen.getByText('2 of 2')).toBeInTheDocument();
+    });
+
+    it('No users found', async () => {
+      const initialState = {
+        user: {
+          token: 'valid token',
+        },
+      };
+      const { store } = configureStore(initialState);
+
+      jest.spyOn(userService, 'getAllUsers').mockResolvedValue({
+        data: {
+          users: [],
+        },
+      });
+
+      render(
+        <Provider store={store}>
+          <MockRouter initialRoute='/userSearch'>
+            <Switch>
+              <ProtectedRoute exact path='/userSearch' component={UserSearch} />
+              <ProtectedRoute
+                exact
+                path='/friendsList'
+                component={FriendsList}
+              />
+            </Switch>
+          </MockRouter>
+        </Provider>
+      );
+
+      await waitFor(() =>
+        expect(screen.queryByTestId('loadingSpinner')).toBeNull()
+      );
+
+      expect(screen.getByText('No Users found')).toBeInTheDocument();
+    });
+
+    it('Decrement button disabled', async () => {
+      const initialState = {
+        user: {
+          token: 'valid token',
+        },
+      };
+      const { store } = configureStore(initialState);
+
+      jest.spyOn(userService, 'getAllUsers').mockResolvedValue({
+        data: {
+          users: [
+            { username: 'hello.there', _id: 1 },
+            { username: 'hello.there', _id: 2 },
+            { username: 'hello.there', _id: 3 },
+            { username: 'hello.there', _id: 4 },
+            { username: 'hello.there', _id: 5 },
+            { username: 'hello.there', _id: 6 },
+          ],
+        },
+      });
+
+      render(
+        <Provider store={store}>
+          <MockRouter initialRoute='/userSearch'>
+            <Switch>
+              <ProtectedRoute exact path='/userSearch' component={UserSearch} />
+              <ProtectedRoute
+                exact
+                path='/friendsList'
+                component={FriendsList}
+              />
+            </Switch>
+          </MockRouter>
+        </Provider>
+      );
+
+      await waitFor(() =>
+        expect(screen.queryByTestId('loadingSpinner')).toBeNull()
+      );
+
+      expect(screen.getByText('1 of 2')).toBeInTheDocument();
+      expect(screen.getByText('Prev Page')).toBeDisabled();
+    });
+
+    it('Increment button disabled', async () => {
+      const initialState = {
+        user: {
+          token: 'valid token',
+        },
+      };
+      const { store } = configureStore(initialState);
+
+      jest.spyOn(userService, 'getAllUsers').mockResolvedValue({
+        data: {
+          users: [
+            { username: 'hello.there', _id: 1 },
+            { username: 'hello.there', _id: 2 },
+            { username: 'hello.there', _id: 3 },
+            { username: 'hello.there', _id: 4 },
+          ],
+        },
+      });
+
+      render(
+        <Provider store={store}>
+          <MockRouter initialRoute='/userSearch'>
+            <Switch>
+              <ProtectedRoute exact path='/userSearch' component={UserSearch} />
+              <ProtectedRoute
+                exact
+                path='/friendsList'
+                component={FriendsList}
+              />
+            </Switch>
+          </MockRouter>
+        </Provider>
+      );
+
+      await waitFor(() =>
+        expect(screen.queryByTestId('loadingSpinner')).toBeNull()
+      );
+
+      expect(screen.getByText('Next Page')).toBeDisabled();
+    });
   });
 });
