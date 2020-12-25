@@ -47,7 +47,7 @@ const StyledNav = styled.nav`
 const NavList = styled.ul`
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 1rem;
   flex-direction: row;
   justify-content: left;
   align-items: center;
@@ -68,7 +68,7 @@ const NavLink = styled(Link)`
 const LogoutButton = styled.button`
   text-align: center;
   background-color: #153243;
-  padding: 1rem;
+  padding: 0;
   margin: 0;
   font-size: 1rem;
   font-family: 'PT Serif', serif;

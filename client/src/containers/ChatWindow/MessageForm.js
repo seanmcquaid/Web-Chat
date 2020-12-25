@@ -27,12 +27,13 @@ const MessageForm = () => {
   }, [name]);
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       socket.on(RECEIVE_IS_FRIEND_TYPING, (data) => {
         setIsFriendTyping(data);
       });
     }, 1000);
     return () => {
+      clearInterval(interval);
       socket.disconnect();
     };
   }, []);
@@ -48,10 +49,11 @@ const MessageForm = () => {
       emitSetUserTyping(token);
       setMessage(event.target.value);
       setIsUserTyping(true);
+      const interval = setInterval(() => {
+        setIsUserTyping(false);
+      }, 3000);
       return () => {
-        setInterval(() => {
-          setIsUserTyping(false);
-        }, 3000);
+        clearInterval(interval);
       };
     },
     [token]
