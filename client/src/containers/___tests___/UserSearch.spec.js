@@ -298,11 +298,11 @@ describe('<UserSearch/>', () => {
 
       expect(screen.getByText('1 of 2')).toBeInTheDocument();
 
-      fireEvent.click('Next Page');
+      fireEvent.click(screen.getByText('Next Page'));
 
       expect(screen.getByText('2 of 2')).toBeInTheDocument();
 
-      fireEvent.click('Prev Page');
+      fireEvent.click(screen.getByText('Prev Page'));
 
       expect(screen.getByText('1 of 2')).toBeInTheDocument();
     });
@@ -349,7 +349,7 @@ describe('<UserSearch/>', () => {
 
       expect(screen.getByText('1 of 2')).toBeInTheDocument();
 
-      fireEvent.click('Next Page');
+      fireEvent.click(screen.getByText('Next Page'));
 
       expect(screen.getByText('2 of 2')).toBeInTheDocument();
     });
