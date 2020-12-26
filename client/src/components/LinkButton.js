@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { memo } from 'react';
 
-const LinkButton = styled(Link)`
+const LinkButton = memo(styled(Link)`
   font-family: 'Poppins', sans-serif;
   padding: 0.75rem;
   border-radius: 10px;
@@ -10,6 +11,6 @@ const LinkButton = styled(Link)`
   background-color: #eef0eb;
   color: black;
   text-decoration: none;
-`;
+`);
 
 export default LinkButton;

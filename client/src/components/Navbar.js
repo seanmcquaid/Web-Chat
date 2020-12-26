@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { logoutAction } from '../store/user/actions';
 import { tokenSelector } from '../store/user/selectors';
+import { memo } from 'react';
 
-const Navbar = () => {
+const Navbar = memo(() => {
   const dispatch = useDispatch();
   const token = useSelector(tokenSelector);
 
@@ -33,7 +34,7 @@ const Navbar = () => {
       <NavList>{navLinks}</NavList>
     </StyledNav>
   );
-};
+});
 
 const StyledNav = styled.nav`
   width: 100%;

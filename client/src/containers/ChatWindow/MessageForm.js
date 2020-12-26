@@ -14,10 +14,13 @@ import { RECEIVE_IS_FRIEND_TYPING } from '../../sockets/types';
 import { tokenSelector } from '../../store/user/selectors';
 
 const MessageForm = () => {
-  const [message, setMessage] = useState('');
+  const [state, setState] = useState({
+    message: '',
+    isUserTyping: false,
+    isFriendTyping: false,
+  });
+  const { message, isUserTyping, isFriendTyping } = state;
   const token = useSelector(tokenSelector);
-  const [isUserTyping, setIsUserTyping] = useState(false);
-  const [isFriendTyping, setIsFriendTyping] = useState(false);
   const { name } = useParams();
 
   useEffect(() => {
@@ -28,7 +31,10 @@ const MessageForm = () => {
 
   useEffect(() => {
     socket.on(RECEIVE_IS_FRIEND_TYPING, (data) => {
-      setIsFriendTyping(data);
+      setState((prevState) => ({
+        ...prevState,
+        isFriendTyping: data,
+      }));
     });
     return () => {
       socket.disconnect();
@@ -43,11 +49,18 @@ const MessageForm = () => {
 
   const onChange = useCallback(
     (event) => {
+      const value = event.target.value;
       emitSetUserTyping(token);
-      setMessage(event.target.value);
-      setIsUserTyping(true);
+      setState((prevState) => ({
+        ...prevState,
+        [event.target.name]: value,
+        isUserTyping: true,
+      }));
       const interval = setInterval(() => {
-        setIsUserTyping(false);
+        setState((prevState) => ({
+          ...prevState,
+          isUserTyping: false,
+        }));
       }, 3000);
       return () => {
         clearInterval(interval);
@@ -60,7 +73,10 @@ const MessageForm = () => {
     (event) => {
       event.preventDefault();
       emitSendMessage({ token, friendName: name, message });
-      setMessage('');
+      setState((prevState) => ({
+        ...prevState,
+        message: '',
+      }));
     },
     [token, name, message]
   );

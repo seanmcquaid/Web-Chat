@@ -8,15 +8,16 @@ import { loginAction } from '../../store/user/actions';
 const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [inputText, setInputText] = useState({
+  const [state, setState] = useState({
     username: '',
     password: '',
   });
+  const { username, password } = state;
 
   const onChange = useCallback((event) => {
     const value = event.target.value;
-    setInputText((state) => ({
-      ...state,
+    setState((prevState) => ({
+      ...prevState,
       [event.target.name]: value,
     }));
   }, []);
@@ -24,18 +25,18 @@ const LoginForm = () => {
   const onSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      dispatch(loginAction(inputText.username, inputText.password)).then(() => {
+      dispatch(loginAction(username, password)).then(() => {
         history.push('/userHome');
       });
     },
-    [dispatch, inputText, history]
+    [dispatch, username, password, history]
   );
 
   return (
     <Form onSubmit={onSubmit}>
       <TextInput
         onChange={onChange}
-        value={inputText.username}
+        value={username}
         name='username'
         type='text'
         label='Username'
@@ -43,7 +44,7 @@ const LoginForm = () => {
       />
       <TextInput
         onChange={onChange}
-        value={inputText.password}
+        value={password}
         name='password'
         type='password'
         label='Password'

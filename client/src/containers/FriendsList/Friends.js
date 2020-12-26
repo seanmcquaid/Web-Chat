@@ -3,9 +3,18 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { LinkButton } from '../../components';
 import { friendsListSelector } from '../../store/friends/selectors';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getUserInfoAction } from '../../store/user/actions';
 
 const Friends = memo(() => {
   const friendsList = useSelector(friendsListSelector);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserInfoAction());
+  }, [dispatch]);
 
   return (
     <StyledFriends>
