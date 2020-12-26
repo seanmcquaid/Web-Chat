@@ -22,13 +22,10 @@ const Messages = () => {
   }, [name, token]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      socket.on(RECEIVE_CURRENT_MESSAGES, (data) => {
-        setMessages(data);
-      });
-    }, 1000);
+    socket.on(RECEIVE_CURRENT_MESSAGES, (data) => {
+      setMessages(data);
+    });
     return () => {
-      clearInterval(interval);
       socket.disconnect();
     };
   }, []);
