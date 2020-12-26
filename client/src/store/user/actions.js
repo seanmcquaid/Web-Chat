@@ -100,13 +100,16 @@ export const getUserInfoAction = () => (dispatch, getState) => {
         type: GET_USER_INFO_SUCCESS,
         userInfo: data,
       });
-      source.cancel();
+      return Promise.resolve();
     })
     .catch((err) => {
       dispatch({
         type: GET_USER_INFO_ERROR,
         error: err,
       });
+      return Promise.reject();
+    })
+    .finally(() => {
       source.cancel();
     });
 };
@@ -131,12 +134,14 @@ export const logoutAction = () => (dispatch, getState) => {
       dispatch({
         type: LOGOUT_SUCCESS,
       });
+      return Promise.resolve();
     })
     .catch((err) => {
       dispatch({
         type: LOGOUT_ERROR,
         error: err,
       });
+      return Promise.reject();
     })
     .finally(() => {
       source.cancel();
