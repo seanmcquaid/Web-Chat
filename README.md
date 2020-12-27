@@ -1,6 +1,6 @@
 # Web Chat
 
-This project will be a simple chat app for some socket.io practice!
+This project was meant to be a playground for utilizing web sockets on both the client and server side. My only issue was being unable to attain full test coverage on the Front End due to issues with mocking socket.io server behavior. I am starting to work on creating my own potential solution for this issue as I felt that there weren't any solid solutions that are well maintained currently within the Front End community.
 
 Basic Requirements :
 
