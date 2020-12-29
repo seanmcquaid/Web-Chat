@@ -9,7 +9,7 @@ import UserSearch from '../UserSearch';
 import FriendsList from '../FriendsList';
 
 describe('<UserSearch/>', () => {
-  it('Loading Spinner', () => {
+  it('Loading Spinner', async () => {
     const initialState = {
       user: {
         token: 'valid token',
@@ -19,10 +19,7 @@ describe('<UserSearch/>', () => {
 
     jest.spyOn(userService, 'getAllUsers').mockResolvedValue({
       data: {
-        users: [
-          { username: 'sean.mcquaid', _id: 1 },
-          { username: 'hello.there', _id: 2 },
-        ],
+        users: [{ username: 'sean.mcquaid', _id: 1 }],
       },
     });
 
@@ -38,6 +35,10 @@ describe('<UserSearch/>', () => {
     );
 
     expect(screen.getByTestId('loadingSpinner')).toBeInTheDocument();
+
+    await waitFor(() =>
+      expect(screen.getByText('sean.mcquaid')).toBeInTheDocument()
+    );
   });
 
   describe('User Search', () => {
